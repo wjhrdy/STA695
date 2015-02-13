@@ -1,0 +1,2725 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+
+\usepackage{amsfonts}%Typical math resource packages
+\usepackage{framed}\usepackage{color}
+
+%\usepackage{setspace}
+\newtheorem{theorem}{Theorem}[section]
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}{Lemma}[section]
+
+\setlength{\hoffset}{-0pt}
+\setlength{\textwidth}{6.0 in}
+\setlength{\textheight}{8.6in}
+\setlength{\oddsidemargin}{0.2 in}
+\setlength{\evensidemargin}{0.2 in}
+\setlength{\topmargin}{-0.3in}
+
+\def\widenspacing{\multiply\baselineskip by 130
+    \divide\baselineskip by 100}
+\end_preamble
+\use_default_options false
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\boxbgcolor #ededed
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 2cm
+\rightmargin 3cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size larger
+Some Topics in Statistical Computation Using R 
+\begin_inset Newline newline
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\shape smallcaps
+Sta 695 002 Spring 2015
+\shape default
+ 
+\begin_inset VSpace 0.2in
+\end_inset
+
+ 
+\size large
+Department of Statistics 
+\begin_inset Newline newline
+\end_inset
+
+ University of Kentucky 
+\begin_inset Newline newline
+\end_inset
+
+ Lexington, KY 40536 
+\begin_inset Newline newline
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size small
+SUMMARY
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+These notes are based on a class of Sta 695, given by Dr.
+ Mai Zhou in Spring 2015.
+ The actual materials covered in class may be different.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\shape slanted
+AMS 2000 Subject Classification:
+\shape default
+ Primary 60E15; secondary 60G30.
+\end_layout
+
+\begin_layout Standard
+
+\shape slanted
+Key Words and Phrases: Truncated data, NPMLE, square error loss.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Make sure you run
+\end_layout
+
+\begin_layout Plain Layout
+install.packages("Rmpfr")
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+in r before compiling
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+We aim to cover some topics that are 
+\shape italic
+interesting
+\shape default
+ and 
+\shape italic
+useful
+\shape default
+ and related to R.
+\begin_inset Newline newline
+\end_inset
+
+We avoid topics that are too theoretical.
+ We try to make the level of the class in between Sta 605 and Sta 705.
+ Finally, two semesters of Statistical Inference (based on Casella and Berger,
+ for example) is assumed.
+\end_layout
+
+\begin_layout Section
+Errors in the R Numerical Computation
+\end_layout
+
+\begin_layout Enumerate
+Errors cause by decimal numbers being represented as binary numbers
+\begin_inset Newline newline
+\end_inset
+
+ Question 1:
+\begin_inset Newline newline
+\end_inset
+
+ Why R tells us 
+\begin_inset Formula $0.3-0.2\neq0.1$
+\end_inset
+
+?
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+0.3 - 0.2 == 0.1 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ Question 2:
+\begin_inset Newline newline
+\end_inset
+
+ If you run the following code in R, it will never stop.
+ Why?
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+V = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+while(V != 0){
+\end_layout
+
+\begin_layout Plain Layout
+
+V = V - 0.1
+\end_layout
+
+\begin_layout Plain Layout
+
+print(V)}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The results will be endless.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Answer:
+\begin_inset Newline newline
+\end_inset
+
+This is because decimal numbers are expressed in the following form in R:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+\sum_{k=1}^{64}\dfrac{\delta_{k}}{2^{k}} &  & \textrm{where}\,\delta=0\,\textrm{or}\,1
+\end{eqnarray}
+
+\end_inset
+
+So, when programming in R, try to avoid the use of 
+\begin_inset Quotes eld
+\end_inset
+
+equal to
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+not equal to.
+\begin_inset Quotes erd
+\end_inset
+
+ The following code is a better practice:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+V = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+while(V > 1e-9){
+\end_layout
+
+\begin_layout Plain Layout
+
+V = V - 0.1
+\end_layout
+
+\begin_layout Plain Layout
+
+print(V)} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Use log as a parameter in the function to make the result more accurate.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Sometimes, there are options built in to common R functions which allow
+ you to get more accurate results.
+ Here's an example using the dnorm function:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+log(dnorm(80,0,2))
+\end_layout
+
+\begin_layout Plain Layout
+
+dnorm(80,0,2,log=T)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Discrepancies found when calculating both sides of the following equality
+ in R when 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ are large:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+y\times\left(\sqrt{x+1}-\sqrt{x}\right)=\dfrac{y}{\sqrt{x+1}+\sqrt{x}}
+\end{equation}
+
+\end_inset
+
+Question:
+\begin_inset Newline newline
+\end_inset
+
+When the values of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ are very large, which of the above expressions is more accurate?
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x = 1e12
+\end_layout
+
+\begin_layout Plain Layout
+
+y=666666666666
+\end_layout
+
+\begin_layout Plain Layout
+
+y*(sqrt(x+1)-sqrt(x))
+\end_layout
+
+\begin_layout Plain Layout
+
+y/(sqrt(x+1)+sqrt(x)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+We can find a more accurate solution by requiring R to make more accurate
+ calculations using the rmpfr package:\SpecialChar \textcompwordmark{}
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+require(Rmpfr)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x = 1e12
+\end_layout
+
+\begin_layout Plain Layout
+
+y=666666666666
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+myx = mpfr(x,128) 
+\end_layout
+
+\begin_layout Plain Layout
+
+myy = mpfr(y,128) 
+\end_layout
+
+\begin_layout Plain Layout
+
+myy*(sqrt(myx+1)-sqrt(myx)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+myy/(sqrt(myx+1)+sqrt(myx))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The above code shows that the expression on the right-hand side of equation
+ (2) is better.
+ Then what makes the other expression not as good?
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+ Answer:
+\begin_inset Newline newline
+\end_inset
+
+When you compute the square root of a number in R, there will be small errors
+ in the decimal values.
+ So, when you compute 
+\begin_inset Formula $\sqrt{x+1}-\sqrt{x}$
+\end_inset
+
+, the digits in front which are more accurate are canceled out and you're
+ left with the inaccurate digits.
+ So, your result won't be the true difference between the two square roots,
+ but the difference in their erroneous decimal approximations.
+ Thus, the right-hand side of equation (2) is better because the denominator
+ involving the square roots is less influenced by those small calculation
+ errors.
+\end_layout
+
+\begin_layout Section
+Confidence Intervals Based on the LRT
+\end_layout
+
+\begin_layout Enumerate
+Let's consider the binomial case
+\begin_inset Newline newline
+\end_inset
+
+Let 
+\begin_inset Formula $X$
+\end_inset
+
+ be a random variable distributed as a Binomial
+\begin_inset Formula $\left(n,p\right)$
+\end_inset
+
+.
+ Then, we know that the maximum likelihood estimator of p will be 
+\begin_inset Formula $\hat{p}=\frac{x}{n}$
+\end_inset
+
+.
+ And, from our introductory statistics courses, we know that we can calculate
+ a confidence interval for 
+\begin_inset Formula $p$
+\end_inset
+
+ by the following formula for a Wald confidence interval: 
+\begin_inset Formula 
+\begin{equation}
+\hat{p}\pm z\sqrt{\frac{\hat{p}\left(1-\hat{p}\right)}{n}}
+\end{equation}
+
+\end_inset
+
+One issue with this type of confidence interval is that it's possible for
+ it to contain values outside of the interval 
+\begin_inset Formula $(0,1)$
+\end_inset
+
+, which doesn't make any sense.
+ There are some known transformations which eliminate (or reduce the likelihood)
+ of this possibility.
+ So, let's consider an arbitrary transformation 
+\begin_inset Formula $g\left(p\right)$
+\end_inset
+
+ and construct a confidence interval for it.
+ From the formula for a Wald confidence interval, we have: 
+\begin_inset Formula 
+\begin{equation}
+g\left(\hat{p}\right)\pm z\sqrt{Var\left(g\left(\hat{p}\right)\right)}
+\end{equation}
+
+\end_inset
+
+And since the MLE is invariant, we know that 
+\begin_inset Formula $\widehat{g\left(p\right)}=g\left(\hat{p}\right)$
+\end_inset
+
+ So, by the Delta method, we have: 
+\begin_inset Formula 
+\begin{equation}
+Var\left(g\left(\hat{p}\right)\right)\approx\left[g'(p)\right]^{2}Var\left(\hat{p}\right)
+\end{equation}
+
+\end_inset
+
+Which gives us the following confidence interval 
+\begin_inset Formula $g(p)$
+\end_inset
+
+: 
+\begin_inset Formula $g(p)\in[L,U]$
+\end_inset
+
+.
+ Which yields the following confidence interval for 
+\begin_inset Formula $p$
+\end_inset
+
+: 
+\begin_inset Formula $p\in[g^{-1}(L),g^{-1}(U)]$
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+So, why do we use transformations and why are they useful? 
+\begin_inset Newline newline
+\end_inset
+
+If you use a 
+\begin_inset Quotes eld
+\end_inset
+
+good
+\begin_inset Quotes erd
+\end_inset
+
+ transformation, then you can guarantee that the confidence interval for
+ 
+\begin_inset Formula $p$
+\end_inset
+
+ will be between 
+\begin_inset Formula $(0,1)$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+But, there exist many different 
+\begin_inset Quotes eld
+\end_inset
+
+good
+\begin_inset Quotes erd
+\end_inset
+
+ transformations.
+ Which one is the best?(kind of arbitrary, accurate, speed, etc.).
+\begin_inset Newline newline
+\end_inset
+
+The selection of the best 
+\begin_inset Quotes eld
+\end_inset
+
+good
+\begin_inset Quotes erd
+\end_inset
+
+ transformation is somewhat arbitrary.
+ Your decision could be based on accuracy, speed, or any other criteria
+ that you deem important.
+ An example of this arbitrariness is the discrepancy between the transformation
+ used by SAS and that used by R.
+ In SAS, they use 
+\begin_inset Formula $log(-log(1-p))$
+\end_inset
+
+, while R uses 
+\begin_inset Formula $log(1-p)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Hypothesis Testing
+\begin_inset Newline newline
+\end_inset
+
+Let's consider testing the following hypotheses:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align}
+H_{0}: & p=p_{0}\\
+H_{1}: & p\neq p_{0}
+\end{align}
+
+\end_inset
+
+Using the likelihood ratio test, we would reject the null when: 
+\begin_inset Formula 
+\begin{align}
+log\left[\frac{likelihood(x,p_{0})}{likelihood(x,\hat{p})}\right] & >C=\chi_{1,0.95}^{2}
+\end{align}
+
+\end_inset
+
+We can simplify the left-hand side of this inequality to:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+xlog(p)+(n-x)log(1-p)-xlog(\hat{p})-(n-x)log(1-\hat{p})=xlog(\frac{p}{\hat{p}})+(n-x)log(\frac{1-p}{1-\hat{p}})
+\end{equation}
+
+\end_inset
+
+Now, there are two conditions the we need to take into consideration:
+\begin_inset Newline newline
+\end_inset
+
+ a.
+ p
+\begin_inset Formula $\neq$
+\end_inset
+
+0 and p
+\begin_inset Formula $\neq$
+\end_inset
+
+1
+\begin_inset Newline newline
+\end_inset
+
+ b.
+ 
+\begin_inset Formula $\hat{p}$
+\end_inset
+
+
+\begin_inset Formula $\neq$
+\end_inset
+
+0 and 
+\begin_inset Formula $\hat{p}$
+\end_inset
+
+
+\begin_inset Formula $\neq$
+\end_inset
+
+1
+\begin_inset Newline newline
+\end_inset
+
+We can write a function in R which calculates this value for us:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+BinLLR = function(n,x,p){
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if(x >= n) stop("100 percent success?")
+\end_layout
+
+\begin_layout Plain Layout
+
+if(p <= 0) stop("P must between 0 and 1") 
+\end_layout
+
+\begin_layout Plain Layout
+
+if(x <= 0) stop 
+\end_layout
+
+\begin_layout Plain Layout
+
+if(p >= 1) stop 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+phat = x/n 
+\end_layout
+
+\begin_layout Plain Layout
+
+-2*(x*log(p/phat)+(n-x)*log(1-p)/(1-phat))}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ts = BinLLR(n=100,x=30,p=0.5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+1 - pchisq(ts,df=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Good Properties of the Likelihood Ratio Test Approach to Confidence Intervals
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The LRT method is transformation invariant
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Monotone Transformations
+\begin_inset Newline newline
+\end_inset
+
+If you have a confidence interval for 
+\begin_inset Formula $p$
+\end_inset
+
+, 
+\begin_inset Formula $(lower,\,upper)$
+\end_inset
+
+, and you want a confidence interval for 
+\begin_inset Formula $log(p)$
+\end_inset
+
+ (or any monotone function), you can find it by taking the log of the lower
+ and upper bounds for 
+\begin_inset Formula $p$
+\end_inset
+
+, 
+\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
+\end_inset
+
+.
+ This is much easier than the Wald method which involves calculating derivatives
+, using the delta method, etc.
+\end_layout
+
+\begin_layout Enumerate
+Transformations Which Aren't Monotone
+\begin_inset Newline newline
+\end_inset
+
+This property even holds for transformations which aren't monotone.
+ If you have a transformation 
+\begin_inset Formula $g(p)$
+\end_inset
+
+ which isn't monotone and a confidence interval for 
+\begin_inset Formula $p$
+\end_inset
+
+, 
+\begin_inset Formula $(l,\,u)$
+\end_inset
+
+, then you can find your transformed confidence interval by the following
+ steps:
+\begin_inset Formula 
+\begin{align*}
+upper_{new} & =\max_{l<p<u}g(p)\\
+lower_{new} & =\min_{l<p<u}g(p)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The LRT method is range preserving
+\begin_inset Newline newline
+\end_inset
+
+This means that the confidence intervals it produces will always be inside
+ of the parameter space.
+ So, in the binomial case, the confidence intervals produced by the LRT
+ method will always be between 
+\begin_inset Formula $(0,1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The LRT method doesn't necessarily give symmetric intervals
+\begin_inset Newline newline
+\end_inset
+
+The asymmetry of the intervals is more similar to the actual distributions
+ under consideration.
+ So, in the binomial case when we have a small value of 
+\begin_inset Formula $p$
+\end_inset
+
+, we know that there are more values above 
+\begin_inset Formula $p$
+\end_inset
+
+ than below it, so we'd expect our interval to reflect this.
+ The Wald interval, on the other hand, will always be symmetric which we
+ know is not always true of the distributions under consideration.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Possible Draw Backs of the Likelihood Ratio Test Approach to Confidence
+ Intervals
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+You may not have to use the delta method or take any derivatives, but you
+ still have to find maximums and roots.
+ These calculations are easily done using computers, so this isn't too much
+ of an issue.
+\end_layout
+
+\begin_layout Enumerate
+This method may not produce the narrowest intervals in all cases.
+ But, you can get narrower intervals by fine-tuning your critical value
+ of 3.84.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+The Ratio of Two Success Probabilities
+\end_layout
+
+\begin_layout Standard
+Let's consider the case where we have two samples, each containing a success
+ probability.
+ From each sample we will have an 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ and an 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, where 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ is the total number of units observed in the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ sample and 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is the total number of successes observed in the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ sample.
+ We can model this situation by two binomial random variables, 
+\begin_inset Formula $X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{2}$
+\end_inset
+
+, where 
+\begin_inset Formula $X_{1}\sim Binomial\left(n_{1},p_{1}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{2}\sim Binomial\left(n_{2},p_{2}\right)$
+\end_inset
+
+, where the MLE for 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\widehat{p_{1}}=\frac{x_{1}}{n_{1}}$
+\end_inset
+
+ and the MLE for 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ is 
+\begin_inset Formula $\widehat{p_{2}}=\frac{x_{2}}{n_{2}}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Now, let's suppose that we want to use the likelihood ratio test method
+ of creating a confidence interval for the ratio of 
+\begin_inset Formula $\frac{p_{1}}{p_{2}}$
+\end_inset
+
+.
+ Since maximum likelihood estimators are invariant, we know that the MLE
+ for 
+\begin_inset Formula $\frac{p_{1}}{p_{2}}$
+\end_inset
+
+ will simply be 
+\begin_inset Formula $\frac{\hat{p_{1}}}{\hat{p_{2}}}=\frac{x_{1}n_{2}}{x_{2}n_{1}}$
+\end_inset
+
+.
+ We also know that since the log-likelihood ratio is additive, it follows
+ that 
+\begin_inset Formula $LLR=LLR\left(\textrm{sample_{1}}\right)+LLR\left(\textrm{sample_{2}}\right)$
+\end_inset
+
+.
+ And since we want to use the likelihood ratio test method, we'll need to
+ consider the following hypotheses:
+\begin_inset Formula 
+\begin{align*}
+H_{0}: & \frac{p_{1}}{p_{2}}=\theta\\
+H_{1}: & \frac{p_{1}}{p_{2}}\neq\theta
+\end{align*}
+
+\end_inset
+
+Under the likelihood ratio test, our initial parameters of interest are
+ 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+.
+ But this is equivalent to considering the parameters 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta$
+\end_inset
+
+, since 
+\begin_inset Formula $\theta=\frac{p_{1}}{p_{2}}$
+\end_inset
+
+.
+ If we take 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta$
+\end_inset
+
+ to be our parameters of interest, then it follows that 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ can be viewed as our nuisance parameter since 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is what we're truly interested in.
+ From our previous coursework, we know that we can get rid of a nuisance
+ parameter in the log-likelihood ratio by simply 
+\begin_inset Quotes eld
+\end_inset
+
+maximizing it out.
+\begin_inset Quotes erd
+\end_inset
+
+ In this case, we'll have:
+\begin_inset Formula 
+\begin{align*}
+LLR\left(\theta\right) & =\max_{p_{1}}\left\{ LLR\left(\textrm{sample_{1}}\right)+LLR\left(\textrm{sample_{2}}\right)\right\} \\
+ & =\max_{\left\{ p_{1},p_{2}:\frac{p_{1}}{p_{2}}=\theta\right\} }\left\{ LLR\left(\textrm{sample_{1}}\right)+LLR\left(\textrm{sample_{2}}\right)\right\} 
+\end{align*}
+
+\end_inset
+
+And then we can multiply this by 
+\begin_inset Formula $-2$
+\end_inset
+
+ to obtain our likelihood ratio test statistic:
+\begin_inset Formula 
+\begin{align*}
+-2\left[LLR\left(\theta\right)\right] & =-2\left[\max_{\left\{ p_{1},p_{2}:\frac{p_{1}}{p_{2}}=\theta\right\} }\left\{ LLR\left(\textrm{sample_{1}}\right)+LLR\left(\textrm{sample_{2}}\right)\right\} \right]\\
+ & =\min_{\left\{ p_{1},p_{2}:\frac{p_{1}}{p_{2}}=\theta\right\} }\left\{ -2\cdot LLR\left(\textrm{sample_{1}}\right)-2\cdot LLR\left(\textrm{sample_{2}}\right)\right\} 
+\end{align*}
+
+\end_inset
+
+So, once we have our likelihood ratio test statistic, we can compare it
+ to 
+\begin_inset Formula $3.84$
+\end_inset
+
+ and determine whether or not we reject 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+.
+ Then, we can create a confidence interval for 
+\begin_inset Formula $\theta=\frac{p_{1}}{p_{2}}$
+\end_inset
+
+ by finding the values of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ which give us a likelihood ratio test statistic less than 
+\begin_inset Formula $3.84$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Below is Dr.
+ Zhou's R code for the computing a confidence interval for the ratio of
+ two success probabilites using the likelihood ratio test method.
+ Note that the code is for 
+\begin_inset Formula $\theta=\frac{p_{2}}{p_{1}}$
+\end_inset
+
+ and not 
+\begin_inset Formula $\theta=\frac{p_{1}}{p_{2}}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<eval=FALSE, tidy=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+BinRatio <- function(n1, x1, n2, x2, step=0.1, initStep=0.1, level=3.84){
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if(x1 >= n1) stop("all success?")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MLE <- (x2*n1)/(x1*n2)   #### recall we are to find CI for p2/p1, not p1/p2.
+\end_layout
+
+\begin_layout Plain Layout
+
+EPS <- .Machine$double.eps
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Theta <- function(theta, n1=n1, x1=x1, n2=n2, x2=x2)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+       llr <- function(const, n1, x1, n2, x2, theta) {
+\end_layout
+
+\begin_layout Plain Layout
+
+              npllik1 <- -2*(x1*log((const*n1)/x1) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+                           (n1-x1)*log(((1-const)*n1)/(n1-x1)))
+\end_layout
+
+\begin_layout Plain Layout
+
+              npllik2 <- -2*(x2*log((const*theta*n2)/x2) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+                           (n2-x2)*log(((1-const*theta)*n2)/(n2-x2)))
+\end_layout
+
+\begin_layout Plain Layout
+
+        return(npllik1 + npllik2)
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+       upBD <- min( 1-EPS, 1/theta - EPS)
+\end_layout
+
+\begin_layout Plain Layout
+
+       temp <- optimize(f = llr, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        lower = EPS, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        upper = upBD, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        n1 = n1, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        x1 = x1, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        n2 = n2, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                        x2 = x2,
+\end_layout
+
+\begin_layout Plain Layout
+
+                        theta = theta)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    cstar <- temp$minimum
+\end_layout
+
+\begin_layout Plain Layout
+
+    val <- temp$objective
+\end_layout
+
+\begin_layout Plain Layout
+
+    pvalue <- 1 - pchisq( val, df=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    list(`-2LLR` = val, cstar = cstar, Pval=pvalue)
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+value <- 0
+\end_layout
+
+\begin_layout Plain Layout
+
+step1 <- step
+\end_layout
+
+\begin_layout Plain Layout
+
+Lbeta <- MLE - initStep
+\end_layout
+
+\begin_layout Plain Layout
+
+for( i in 1:8 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+while(value < level) {
+\end_layout
+
+\begin_layout Plain Layout
+
+Lbeta <- Lbeta - step1
+\end_layout
+
+\begin_layout Plain Layout
+
+value <- Theta(theta = Lbeta, n1=n1, x1=x1, n2=n2, x2=x2)$'-2LLR'
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+Lbeta <- Lbeta + step1
+\end_layout
+
+\begin_layout Plain Layout
+
+step1 <- step1/10
+\end_layout
+
+\begin_layout Plain Layout
+
+value <- Theta( theta =Lbeta, n1=n1, x1=x1, n2=n2, x2=x2)$'-2LLR'
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+value1 <- value
+\end_layout
+
+\begin_layout Plain Layout
+
+value <- 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Ubeta <- MLE + initStep
+\end_layout
+
+\begin_layout Plain Layout
+
+for( i in 1:8 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+   while(value < level) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    Ubeta <- Ubeta + step
+\end_layout
+
+\begin_layout Plain Layout
+
+    value <- Theta(theta=Ubeta, n1=n1, x1=x1, n2=n2, x2=x2 )$'-2LLR'
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   Ubeta <- Ubeta - step
+\end_layout
+
+\begin_layout Plain Layout
+
+   step <- step/10
+\end_layout
+
+\begin_layout Plain Layout
+
+   value <- Theta(theta=Ubeta, n1=n1, x1=x1, n2=n2, x2=x2)$'-2LLR'
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+return( list(Low=Lbeta, Up=Ubeta, FstepL=step1, FstepU=step,
+\end_layout
+
+\begin_layout Plain Layout
+
+Lvalue=value1, Uvalue=value) )
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The Weibull Distribution
+\end_layout
+
+\begin_layout Standard
+\noindent
+We know from survival analysis that a random variable, 
+\begin_inset Formula $X$
+\end_inset
+
+, following a Weibull distribution will satisfy the following probability:
+\begin_inset Formula 
+\[
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
+\]
+
+\end_inset
+
+If we have a sample of size 
+\begin_inset Formula $n$
+\end_inset
+
+ from a Weibull distribution, then we can derive the log-likelihood function
+ for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+log\left(L\left(\lambda,\beta|X_{1},\ldots,X_{n}\right)\right)=\sum_{i=1}^{n}\left[log\left(\beta\right)+\left(\beta-1\right)log\left(\lambda x_{i}\right)+log\left(\lambda\right)-\left(\lambda x_{i}\right)^{\beta}\right]
+\]
+
+\end_inset
+
+But in survival analysis, it is common to have censored data.
+ This means that we have some 
+\begin_inset Formula $X$
+\end_inset
+
+ values that we don't know the exact value of, only that they're greater
+ than some specific value.
+ As an example, consider the case where you track ants for a 12 month period
+ and you record the time at which they die.
+ If, at the end of that 12 month period, an ant is still alive, then all
+ you know is that it survived for longer than 12 months.
+ So, if 
+\begin_inset Formula $\textrm{ant_{9}}=X_{9}$
+\end_inset
+
+ is still alive, then you know that it survived for some time greater than
+ 
+\begin_inset Formula $12$
+\end_inset
+
+ months.
+ So, the survival value of 
+\begin_inset Formula $\textrm{ant_{9}}$
+\end_inset
+
+ is 
+\begin_inset Formula $X_{9}>12$
+\end_inset
+
+, which we denote by 
+\begin_inset Formula $X_{9}=12^{+}$
+\end_inset
+
+.
+ When dealing with survival data, it's common to represent it with two vectors.
+ The first vector contains the survival values, and the second vector is
+ the corresponding 
+\begin_inset Quotes eld
+\end_inset
+
+status
+\begin_inset Quotes erd
+\end_inset
+
+ vector, which contains a 
+\begin_inset Formula $1$
+\end_inset
+
+ if the corresponding survival value is a true value and a 
+\begin_inset Formula $0$
+\end_inset
+
+ if the corresponding survival value is a censored value.
+ Using the survival package in R, you can convert a a pair of vectors into
+ survival data using the Surv function.
+ Here's an example:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE,error=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+require(survival)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x = c(5,3,7,2,8,9,5,4,6,2)
+\end_layout
+
+\begin_layout Plain Layout
+
+d = c(0,1,1,1,1,1,0,0,1,1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Surv(x,d)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+How does censored data change our likelihood function?
+\begin_inset Newline newline
+\end_inset
+
+For an observation with a status of 
+\begin_inset Formula $1$
+\end_inset
+
+, its contribution to the likelihood function is simply 
+\begin_inset Formula $f\left(x_{i}|\lambda,\beta\right)$
+\end_inset
+
+.
+ For an observation with a status of 
+\begin_inset Formula $0$
+\end_inset
+
+, its contribution to the likelihood function is the probability 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $P\left(X>x_{i}\right)=e^{-\left(\lambda x_{i}\right)^{\beta}}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+ So, if we have some censored data, then our likelihood function becomes:
+\begin_inset Formula 
+\[
+L\left(\lambda,\beta|X_{1},\ldots,X_{n}\right)=\prod_{i=1}^{n}\left[f\left(x_{i}|\lambda,\beta\right)\right]^{\delta_{i}}\left[e^{-\left(\lambda x_{i}\right)^{\beta}}\right]^{1-\delta_{i}}
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+where 
+\begin_inset Formula $\delta_{i}$
+\end_inset
+
+ is the status of the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ observation
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+ Below is Dr.
+ Zhou's R code for the computing the log-likelihood ratio for a Weibull
+ distribution with censored data:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WeibLLR <- function(x, d, lam, beta){
+\end_layout
+
+\begin_layout Plain Layout
+
+  ###  lam  can be a vector of length(x), but use with care.
+\end_layout
+
+\begin_layout Plain Layout
+
+  ###  beta must be a scalar.
+\end_layout
+
+\begin_layout Plain Layout
+
+  ##############################
+\end_layout
+
+\begin_layout Plain Layout
+
+  ### if you use survreg of Survival package, then beta=1/scale
+\end_layout
+
+\begin_layout Plain Layout
+
+  ### and  lam=exp(-location)
+\end_layout
+
+\begin_layout Plain Layout
+
+  ############################################
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (any((d != 0) & (d != 1) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+    stop("d must be 0(right-censored) or 1(uncensored)")
+\end_layout
+
+\begin_layout Plain Layout
+
+  if(any(lam <= 0)) stop("lam must >0")
+\end_layout
+
+\begin_layout Plain Layout
+
+  if(beta <= 0) stop("beta must > 0")
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  sum(d*(log(beta)+(beta-1)*log(x)+ beta*log(lam))) - sum((x*lam)^beta)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Finding the MLE
+\begin_inset Newline newline
+\end_inset
+
+Calculating the MLE of the Weibull distribution can be difficult, especially
+ with censored data, so we'll use a pre-made function in R.
+ Under the survival package, we can use the survreg function to calculate
+ the MLE by just fitting the intercept.
+ Here's some sample code:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+t = c(5,4,6,8,11,12,16,14,21,26,33,44)
+\end_layout
+
+\begin_layout Plain Layout
+
+d = c(1,0,1,1,1,1,1,1,1,0,1,1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+survreg( Surv(t,d) ~ 1, dist = "weibull")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+One issue with this function is that it doesn't return the MLE's for the
+ Weibull distribution, but the MLE's for the extreme value distribution
+ which is just the log of a Weibull distribution.
+ Since the MLE is invariant, we know that we can convert the MLE of the
+ extreme value distribution to that of the Weibull distribution by a transformat
+ion.
+ By using the following transformations, we can find the MLE for the Weibull
+ distribution:
+\begin_inset Formula 
+\begin{align*}
+\lambda & =e^{-location}\\
+\beta & =\frac{1}{scale}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $location$
+\end_inset
+
+ and 
+\begin_inset Formula $scale$
+\end_inset
+
+ are the parameters of the extreme value distribution.
+ In R, we can find the MLE of a Weibull distribution in the following way:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+t = c(5,4,6,8,11,12,16,14,21,26,33,44)
+\end_layout
+
+\begin_layout Plain Layout
+
+d = c(1,0,1,1,1,1,1,1,1,0,1,1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+reg = survreg( Surv(t,d) ~ 1, dist = "weibull")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+location = as.vector(reg$coefficients)
+\end_layout
+
+\begin_layout Plain Layout
+
+scale = as.vector(reg$scale)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+exp(-location)
+\end_layout
+
+\begin_layout Plain Layout
+
+1/scale
+\end_layout
+
+\begin_layout Plain Layout
+
+reg$loglik
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Now that we have the MLE, the next step is to turn this into a confidence
+ interval for the survival probability, 
+\begin_inset Formula $P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}$
+\end_inset
+
+ where 
+\begin_inset Formula $t$
+\end_inset
+
+ is some time point.
+ So, let's first look at a plot of the likelihood function with respect
+ to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ when we take 
+\begin_inset Formula $t=15$
+\end_inset
+
+:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<tidy=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WeibLLR <- function(x, d, lam, beta){
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (any((d != 0) & (d != 1) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+    stop("d must be 0(right-censored) or 1(uncensored)")
+\end_layout
+
+\begin_layout Plain Layout
+
+  if(any(lam <= 0)) stop("lam must >0")
+\end_layout
+
+\begin_layout Plain Layout
+
+  if(beta <= 0) stop("beta must > 0")
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  sum(d*(log(beta)+(beta-1)*log(x)+ beta*log(lam))) - sum((x*lam)^beta)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+lamvec <- 1:100/1000
+\end_layout
+
+\begin_layout Plain Layout
+
+betavec <- 0.5 + 1:130/50
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ymat <- xmat <- matrix(NA, 100, 130)
+\end_layout
+
+\begin_layout Plain Layout
+
+for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	                                                 d=d,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     lam=lamvec[i], 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     beta=betavec[j])
+\end_layout
+
+\begin_layout Plain Layout
+
+for(i in 1:100) for(j in 1:130) {
+\end_layout
+
+\begin_layout Plain Layout
+
+ymat[i,j] <- exp(-(lamvec[i]*15)^betavec[j] )
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+contour(lamvec, betavec, xmat)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+We can see that the log-likelihood function is its highest around 
+\begin_inset Formula $\left(0.05,1.5\right)$
+\end_inset
+
+, which agrees with the MLE values that we found above.
+ Now, we want to find a 
+\begin_inset Formula $95\%$
+\end_inset
+
+ confidence interval for the survival probabilty given a value of 
+\begin_inset Formula $t$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+P\left(X>t\right)=g\left(\lambda,\beta\right)=e^{-\left(\lambda t\right)^{\beta}}
+\]
+
+\end_inset
+
+So, we need to find the region of our likelihood function which is within
+ 
+\begin_inset Formula $3.84$
+\end_inset
+
+ of our MLE.
+ Let's define this region to be 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ Once we have the region 
+\begin_inset Formula $U$
+\end_inset
+
+, we can find the upper and lower bounds of our confidence interval in the
+ following way:
+\begin_inset Formula 
+\begin{align*}
+\textrm{upper} & =\max_{\lambda,\beta\in U}\left\{ exp\{-\left(\lambda t\right)\right\} \\
+\textrm{lower} & =\min_{\lambda,\beta\in U}\left\{ exp\{-\left(\lambda t\right)\right\} 
+\end{align*}
+
+\end_inset
+
+We can use R to find the region 
+\begin_inset Formula $U$
+\end_inset
+
+ by using the following code:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+lamvec <- 1:100/1000
+\end_layout
+
+\begin_layout Plain Layout
+
+betavec <- 0.5 + 1:130/50
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ymat <- xmat <- matrix(NA, 100, 130)
+\end_layout
+
+\begin_layout Plain Layout
+
+for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t, d=d, lam=lamvec[i],
+ beta=betavec[j])
+\end_layout
+
+\begin_layout Plain Layout
+
+for(i in 1:100) for(j in 1:130) ymat[i,j] <- exp(-(lamvec[i]*15)^betavec[j]
+ )
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+contour(lamvec, betavec, xmat, level=c(-38.53396 - 3.84))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Since we don't have an explicit formula or function for this region, we
+ will have to find the confidence interval for it algoritmically.
+ So, we'll have to search the region 
+\begin_inset Formula $U$
+\end_inset
+
+ for a maximum and minimum value.
+ An example of this process is shown below:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+contour(lamvec, betavec, xmat, level=c(-38.53396 - 3.84))
+\end_layout
+
+\begin_layout Plain Layout
+
+par(new=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+contour(lamvec, betavec, ymat, level=c(0.24, 0.23, 0.22))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+We can see that the smallest probability value which falls in our region
+ 
+\begin_inset Formula $U$
+\end_inset
+
+ is somewhere around 
+\begin_inset Formula $0.24$
+\end_inset
+
+.
+ We could do the same for the upper bound, but it would also by equally
+ imprecise.
+ Instead, we should create a more genreal search method for finding maximum
+ and minimum values which would work in higher dimensions as well.
+ Dr.
+ Zhou suggests we use the 
+\begin_inset Quotes eld
+\end_inset
+
+Blind Man Climbing a Mounting
+\begin_inset Quotes erd
+\end_inset
+
+ approach.
+ The steps for this algorithm are:
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Choose a radius value.
+\end_layout
+
+\begin_layout Enumerate
+Starting with the MLE, calculate the likelihood values at every (or a select
+ number) point on that radius.
+\end_layout
+
+\begin_layout Enumerate
+Find the largest value and take that point as your new center.
+\end_layout
+
+\begin_layout Enumerate
+From your new center point, calculate the likelihood values at every (or
+ a select number) point on that radius.
+\end_layout
+
+\begin_layout Enumerate
+Continue this process until you have a point which lies outside your region
+ 
+\begin_inset Formula $U$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Once you find one point outside of 
+\begin_inset Formula $U$
+\end_inset
+
+, return to your previous point and reduce your radius value and recalculate
+ you likelihood values.
+\end_layout
+
+\begin_layout Enumerate
+Repeat until the radius value gets sufficiently small.
+\end_layout
+
+\begin_layout Standard
+Likelihood Ratio Test Method vs.
+ the Wald Method in the Weibull Case:
+\begin_inset Newline newline
+\end_inset
+
+Both require work to get a confidence interval, but the Wald requires lots
+ of calculations by hand while the LRT method only requires computation
+ time once your search algorithm is written.
+ So, we obviously prefer the LRT method.
+\end_layout
+
+\end_body
+\end_document
