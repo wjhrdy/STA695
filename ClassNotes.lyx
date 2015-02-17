@@ -215,14 +215,18 @@ Make sure you run
 
 \begin_layout Plain Layout
 install.packages("Rmpfr")
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Plain Layout
+install.packages(
+\begin_inset Quotes eld
 \end_inset
 
-
-\begin_inset Newline newline
+knitr
+\begin_inset Quotes erd
 \end_inset
 
-
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1089,7 +1093,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\,upper)$
+\begin_inset Formula $(lower,\, upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1102,7 +1106,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
 \end_inset
 
 .
@@ -1125,7 +1129,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\,u)$
+\begin_inset Formula $(l,\, u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1407,7 +1411,7 @@ So, once we have our likelihood ratio test statistic, we can compare it
 
 Below is Dr.
  Zhou's R code for the computing a confidence interval for the ratio of
- two success probabilites using the likelihood ratio test method.
+ two success probabilities using the likelihood ratio test method.
  Note that the code is for 
 \begin_inset Formula $\theta=\frac{p_{2}}{p_{1}}$
 \end_inset
@@ -1774,7 +1778,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
@@ -2466,7 +2470,7 @@ We can see that the log-likelihood function is its highest around
 \begin_inset Formula $95\%$
 \end_inset
 
- confidence interval for the survival probabilty given a value of 
+ confidence interval for the survival probability given a value of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -2521,7 +2525,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<>>=
+<<tidy=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -2549,8 +2553,22 @@ ymat <- xmat <- matrix(NA, 100, 130)
 
 \begin_layout Plain Layout
 
-for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t, d=d, lam=lamvec[i],
- beta=betavec[j])
+for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     d=d, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     lam=lamvec[i], 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                     beta=betavec[j])
 \end_layout
 
 \begin_layout Plain Layout
@@ -2584,7 +2602,7 @@ contour(lamvec, betavec, xmat, level=c(-38.53396 - 3.84))
 \end_inset
 
 Since we don't have an explicit formula or function for this region, we
- will have to find the confidence interval for it algoritmically.
+ will have to find the confidence interval for it algorithmically.
  So, we'll have to search the region 
 \begin_inset Formula $U$
 \end_inset
@@ -2653,7 +2671,7 @@ We can see that the smallest probability value which falls in our region
 .
  We could do the same for the upper bound, but it would also by equally
  imprecise.
- Instead, we should create a more genreal search method for finding maximum
+ Instead, we should create a more general search method for finding maximum
  and minimum values which would work in higher dimensions as well.
  Dr.
  Zhou suggests we use the 
