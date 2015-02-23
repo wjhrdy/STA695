@@ -4,7 +4,7 @@ These notes are based on a class of Sta 695, given by Dr. Mai Zhou in Spring 201
 
 What you will need to compile:
 
-  * [Lyx](http://www.lyx.org/Download)
+  * [Lyx 2.1.*](http://www.lyx.org/Download)
   * [R](http://www.r-project.org/)
     * [knitr](http://yihui.name/knitr/)
     * [Rmpfr](http://cran.r-project.org/web/packages/Rmpfr/index.html)
