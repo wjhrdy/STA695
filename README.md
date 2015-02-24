@@ -8,4 +8,5 @@ What you will need to compile:
   * [R](http://www.r-project.org/)
     * [knitr](http://yihui.name/knitr/)
     * [Rmpfr](http://cran.r-project.org/web/packages/Rmpfr/index.html)
+    * [numDeriv](http://cran.r-project.org/web/packages/numDeriv/)
 
