@@ -1093,7 +1093,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\, upper)$
+\begin_inset Formula $(lower,\,upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1106,7 +1106,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
 \end_inset
 
 .
@@ -1129,7 +1129,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\, u)$
+\begin_inset Formula $(l,\,u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1778,7 +1778,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
@@ -2007,8 +2007,8 @@ where
 \color inherit
 .
  Below is Dr.
- Zhou's R code for the computing the log-likelihood ratio for a Weibull
- distribution with censored data:
+ Zhou's R code for the computing the log-likelihood for a Weibull distribution
+ with censored data:
 \begin_inset Newline newline
 \end_inset
 
@@ -2031,7 +2031,7 @@ status open
 
 \begin_layout Plain Layout
 
-WeibLLR <- function(x, d, lam, beta){
+WeibLL <- function(x, d, lam, beta){
 \end_layout
 
 \begin_layout Plain Layout
@@ -2286,6 +2286,16 @@ reg$loglik
 
 \begin_layout Plain Layout
 
+Maxi <- reg$loglik[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+print(Maxi)
+\end_layout
+
+\begin_layout Plain Layout
+
 @
 \end_layout
 
@@ -2341,7 +2351,7 @@ status open
 
 \begin_layout Plain Layout
 
-WeibLLR <- function(x, d, lam, beta){
+WeibLL <- function(x, d, lam, beta){
 \end_layout
 
 \begin_layout Plain Layout
@@ -2404,7 +2414,7 @@ ymat <- xmat <- matrix(NA, 100, 130)
 
 \begin_layout Plain Layout
 
-for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t, 
+for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLL(x=t, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -2553,7 +2563,7 @@ ymat <- xmat <- matrix(NA, 100, 130)
 
 \begin_layout Plain Layout
 
-for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLLR(x=t,
+for(i in 1:100) for(j in 1:130) xmat[i,j] <- WeibLL(x=t,
 \end_layout
 
 \begin_layout Plain Layout
@@ -2583,7 +2593,7 @@ for(i in 1:100) for(j in 1:130) ymat[i,j] <- exp(-(lamvec[i]*15)^betavec[j]
 
 \begin_layout Plain Layout
 
-contour(lamvec, betavec, xmat, level=c(-38.53396 - 3.84))
+contour(lamvec, betavec, xmat, level=c( Maxi - 3.84/2))
 \end_layout
 
 \begin_layout Plain Layout
@@ -2631,7 +2641,7 @@ status open
 
 \begin_layout Plain Layout
 
-contour(lamvec, betavec, xmat, level=c(-38.53396 - 3.84))
+contour(lamvec, betavec, xmat, level=c( Maxi - 3.84/2))
 \end_layout
 
 \begin_layout Plain Layout
@@ -2641,7 +2651,7 @@ par(new=TRUE)
 
 \begin_layout Plain Layout
 
-contour(lamvec, betavec, ymat, level=c(0.24, 0.23, 0.22))
+contour(lamvec, betavec, ymat, level=c(0.323, 0.24, 0.22))
 \end_layout
 
 \begin_layout Plain Layout
