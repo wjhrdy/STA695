@@ -1093,7 +1093,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\,upper)$
+\begin_inset Formula $(lower,\, upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1106,7 +1106,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
 \end_inset
 
 .
@@ -1129,7 +1129,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\,u)$
+\begin_inset Formula $(l,\, u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1778,7 +1778,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
@@ -2747,6 +2747,427 @@ Both require work to get a confidence interval, but the Wald requires lots
  of calculations by hand while the LRT method only requires computation
  time once your search algorithm is written.
  So, we obviously prefer the LRT method.
+\end_layout
+
+\begin_layout Standard
+Here is the Log likelihood ratio function that we will use for optimization
+ in this case we have the maximum for this problem set as a magic number
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+WLLRfn <- function(para, dataMat, Maxi=-38.53396) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  mytemp <- 2*( Maxi-WeibLL(x=dataMat[1,], d=dataMat[2,], lam=para[1], beta=para
+[2]))
+\end_layout
+
+\begin_layout Plain Layout
+
+  list("-2LLR"=mytemp)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is a function created by Dr.
+ Zhou that will uses the steps above to find the lower value of the confidence
+ interval.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+FindL2 <- function(mle, LLRfn, Pfun, dataMat, level=3.84) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (length(mle) != 2) stop("MLE must be of length 2")
+\end_layout
+
+\begin_layout Plain Layout
+
+  ####
+\end_layout
+
+\begin_layout Plain Layout
+
+  #### Pfun must be able to take vector inputs (as well as scalar)in both
+\end_layout
+
+\begin_layout Plain Layout
+
+  #### of its arguments (b1 and b2)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #### No need to compute Max, sinve -2LLR at mle in 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+  ####
+\end_layout
+
+\begin_layout Plain Layout
+
+  PfunLoid <- Pfun(b1=mle[1],b2=mle[2])
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Pfun2<- function(x) Pfun(b1=x[1], b2=x[2])
+\end_layout
+
+\begin_layout Plain Layout
+
+  stepsize <- (0.03*(1/grad(Pfun2, mle))) ####how to get 0.03?
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  b1vec <- mle[1] + stepsize[1] * (1:6 - 3.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+  b2vec <- mle[1] + stepsize[1] * (1:6 - 3.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+  temp <- matrix(NA, nrow =3, ncol=36)
+\end_layout
+
+\begin_layout Plain Layout
+
+  temp[1, ] <- rep(b1vec, each=6)
+\end_layout
+
+\begin_layout Plain Layout
+
+  temp[2, ] <- rep(b1vec)
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (i in 1:6) for (j in 1:6 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    ind <- (i - 1) * 6 + j
+\end_layout
+
+\begin_layout Plain Layout
+
+    mtemp <- LLRfn(para=c(b1vec[i], b2vec[j]), dataMat)
+\end_layout
+
+\begin_layout Plain Layout
+
+    temp[3, ind] <- mtemp$"-2LLR"
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  target <- level
+\end_layout
+
+\begin_layout Plain Layout
+
+  subsetInd <- (temp[3, ] <- target)
+\end_layout
+
+\begin_layout Plain Layout
+
+  if ( !any(subsetInd) )
+\end_layout
+
+\begin_layout Plain Layout
+
+    #### stepsize <- stepsize/10 ####
+\end_layout
+
+\begin_layout Plain Layout
+
+    stop("stepsize too wide")
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  ####what if subsetInd is empty??
+\end_layout
+
+\begin_layout Plain Layout
+
+  ParaTrials <- temp[, subsetInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+  TrialValues <- Pfun(b1=ParaTrials[1,], b2=ParaTrials[2,])
+\end_layout
+
+\begin_layout Plain Layout
+
+  minInd <- which.min(trialValues)
+\end_layout
+
+\begin_layout Plain Layout
+
+  PfunL <- TrialValues[minInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+  minParaOLD <- minPara <- ParaTrials[, minInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (N in 1:25) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (sum(as.numeric(subsetInd)) < 15)
+\end_layout
+
+\begin_layout Plain Layout
+
+      stepsize <- stepsize/3
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ( Pfun >= PfunLoid ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      minPara <- minParaOLD
+\end_layout
+
+\begin_layout Plain Layout
+
+      stepsize<-stepsize/3
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    b1vec <- minPara[1] + stepsize[1] * (1:6 -3.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+    b2vec <- minPara[2] + stepsize[2] * (1:6 -3.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+    temp[1, ] <- rep(b1vec, each=6)
+\end_layout
+
+\begin_layout Plain Layout
+
+    temp[2, ] <- rep(b1vec)
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i in 1:6) for (j in 1:6 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      ind <- (i - 1) * 6 + j
+\end_layout
+
+\begin_layout Plain Layout
+
+      mtemp <- LLRfn(para=c(b1vec[i], b2vec[j]), dataMat)
+\end_layout
+
+\begin_layout Plain Layout
+
+      temp[3, ind] <- mtemp$"-2LLR"
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    subsetInd <- (temp[3, ] <- target)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ParaTrials <- temp[, subsetInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+    TrialValues <- Pfun(b1=ParaTrials[1,], b2=ParaTrials[2,])
+\end_layout
+
+\begin_layout Plain Layout
+
+    minInd <- which.min(TrialValues)
+\end_layout
+
+\begin_layout Plain Layout
+
+    PfunLoid <- PfunL
+\end_layout
+
+\begin_layout Plain Layout
+
+    PfunL <- TrialValues[minInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+    minParaOLD <- minPara
+\end_layout
+
+\begin_layout Plain Layout
+
+    minPara <- ParaTrials[, minInd]
+\end_layout
+
+\begin_layout Plain Layout
+
+    print(c(PfunL, minPara))
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  list(Lower=PfunL, minParameterNloglik = minPara)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body
