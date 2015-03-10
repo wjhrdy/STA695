@@ -3168,7 +3168,7 @@ FindL2 <- function(mle, LLRfn, Pfun, dataMat, level=3.84) {
 \end_layout
 
 \begin_layout Section
-Build R Package Using Rtools
+Build R Package Using Rtools on Windows
 \end_layout
 
 \begin_layout Subsection
@@ -3177,7 +3177,7 @@ Prerequisite
 
 \begin_layout Standard
 In order to use Rtools to build R package, you have to make sure you have
- the following softwares already installed in your computer:
+ the following softwares already installed on your MS Windows computer:
 \end_layout
 
 \begin_layout Itemize
