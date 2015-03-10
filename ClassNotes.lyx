@@ -1093,7 +1093,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\, upper)$
+\begin_inset Formula $(lower,\,upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1106,7 +1106,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
 \end_inset
 
 .
@@ -1129,7 +1129,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\, u)$
+\begin_inset Formula $(l,\,u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1778,7 +1778,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
@@ -2540,6 +2540,7 @@ status open
 
 \begin_layout Plain Layout
 
+Pfun
 \end_layout
 
 \begin_layout Plain Layout
@@ -3166,7 +3167,764 @@ FindL2 <- function(mle, LLRfn, Pfun, dataMat, level=3.84) {
 
 \end_layout
 
+\begin_layout Section
+Build R Package Using Rtools
+\end_layout
+
+\begin_layout Subsection
+Prerequisite
+\end_layout
+
 \begin_layout Standard
+In order to use Rtools to build R package, you have to make sure you have
+ the following softwares already installed in your computer:
+\end_layout
+
+\begin_layout Itemize
+Latex (i.e.
+ Miktex)
+\end_layout
+
+\begin_layout Itemize
+R
+\end_layout
+
+\begin_layout Itemize
+Rtools
+\end_layout
+
+\begin_layout Standard
+Note that the version of R (newest 3.1.2) has to match the version of Rtools
+ (newest Rtools32).
+ You can check the existence of these softwares by typing in 
+\begin_inset Quotes eld
+\end_inset
+
+latex
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+R
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+ls
+\begin_inset Quotes erd
+\end_inset
+
+ in your DOS Prompt.
+ And make sure that you have R and Rtools paths in your system environment.
+\end_layout
+
+\begin_layout Subsection
+General Steps
+\end_layout
+
+\begin_layout Enumerate
+Use package.skeleton() in R.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+First, you already have the function 
+\begin_inset Quotes eld
+\end_inset
+
+Pfun
+\begin_inset Quotes erd
+\end_inset
+
+ constructed in R.
+ And you want to build up a package only containing this function.
+ Then, to create a package called 
+\begin_inset Quotes eld
+\end_inset
+
+STA695MZ
+\begin_inset Quotes erd
+\end_inset
+
+ only containing 
+\begin_inset Quotes eld
+\end_inset
+
+Pfun
+\begin_inset Quotes erd
+\end_inset
+
+, use the R command.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Verbatim
+
+package.skeleton(list="Pfun",name="Sta695MZ")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Editing the files
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+A package consists of a directory containing a file ‘DESCRIPTION’ and usually
+ has the subdirectories R, data and man.
+ The package directory should be given the same name as the package.
+ The package.skeleton command above will have created these files for you.
+ You now need to edit them so they contain the right information.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+DESCRIPTION file
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The DESCRIPTION file contains basic information about the package in the
+ following format:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+Package: Sta695MZ
+\end_layout
+
+\begin_layout Plain Layout
+Type: Package
+\end_layout
+
+\begin_layout Plain Layout
+Title: Functions we used inn sta695 in Univ.
+ of Kentucky
+\end_layout
+
+\begin_layout Plain Layout
+Version: 0.1
+\end_layout
+
+\begin_layout Plain Layout
+Date: 2015-02-26
+\end_layout
+
+\begin_layout Plain Layout
+Author: Mai Zhou
+\end_layout
+
+\begin_layout Plain Layout
+Maintainer: Mai Zhou <mai@ms.uky.edu>
+\end_layout
+
+\begin_layout Plain Layout
+Description: Functions to construct likelihood ratio confidence intervals.
+\end_layout
+
+\begin_layout Plain Layout
+License: GPL-2
+\end_layout
+
+\begin_layout Plain Layout
+Packaged: 2015-03-03 03:01:39 UTC; mai
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Rd files
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The help files for each function and data set are given in “R documentation”
+ (Rd) files in the man subdirectory.
+ These are in a simple markup language closely resembling LaTeX, which can
+ be processed into a variety of formats, including LaTeX, HTML and plain
+ text.
+ As an example, here is the file which documents the function Pfun in the
+ Sta695MZ package.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+name{Pfun}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+alias{Pfun}
+\end_layout
+
+\begin_layout Plain Layout
+%- Also NEED an '
+\backslash
+alias' for EACH other topic documented here.
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+title{ Weibull survival probability at T=15.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+description{ A function that returns the survival probability at T=15, for
+ the Weibull distribution.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+usage{ Pfun(b1, b2) } 
+\backslash
+arguments{ 
+\backslash
+item{b1}{ A positive number or vector.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+item{b2}{ A positive number.
+ } }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+details{ Returns a survival probability given the two parameters of the
+ Weibull distribution.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+value{ The value returned is between 0 and 1.
+ The survival probability at T=15 for the Weibull distribution, parameter
+ b1 and b2.
+ %%Here we use the definition of the Weibull as 
+\backslash
+code{ P(X > t) = exp( -(b1*t)^b2 ) }.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+references{ %% ~put references to the literature/web site here ~ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+author{ Mai Zhou }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+note{ %% ~~further notes~~ }
+\end_layout
+
+\begin_layout Plain Layout
+%% ~Make other sections like Warning with 
+\backslash
+section{Warning }{....} ~
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+seealso{ %% ~~objects to See Also as 
+\backslash
+code{
+\backslash
+link{help}}, ~~~ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+examples{ ##---- Should be DIRECTLY executable !! ---- Pfun(b1=0.1, b2=1.3)
+ } 
+\backslash
+keyword{ distribution }
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+keyword{ survival }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Checking the package
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+To check that the package satisfies the requirements for a CRAN package,
+ in DOS Prompt, use
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Verbatim
+
+Rcmd check STA695MZ
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Notice:
+\series default
+ The checks are quite strict.
+ A package will often work ok even if it doesn’t pass these tests.
+ But it is good practice to build packages that do satisfy these tests as
+ it may save problems later.
+\end_layout
+
+\begin_layout Enumerate
+Compiling the package for Windows
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+To compile the package into a zip file, go to a DOS prompt in the directory
+ containing your package.
+ (i.e., the directory 
+\begin_inset Quotes eld
+\end_inset
+
+C:
+\backslash
+My Documents
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+ in the above example.
+ Then type
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Verbatim
+
+Rcmd INSTALL --build STA695MZ
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This will compile all the necessary information and create a zip file which
+ should be ready to load in R.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Building a package for other operating systems
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+To build a package for something other than a Windows computer, use
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Verbatim
+
+Rcmd build STA695MZ
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This creates a tar.gz file which can then be installed on a non-Windows computer.
+ It can also be uploaded to CRAN provided it satisfies the above tests.
+\end_layout
+
+\begin_layout Enumerate
+Installing a package from local zip files
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+In R, select Packages
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+Install packages from local zip files.
+ Then select the zip file in your computer.
+\end_layout
+
+\begin_layout Enumerate
+Including C code
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Whenever you want to build some packages that contains come C codes, you
+ have to make sure that you have the source C code in the folder 
+\begin_inset Quotes eld
+\end_inset
+
+src
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In the following example, we try to build a 
+\begin_inset Quotes eld
+\end_inset
+
+Cdemo
+\begin_inset Quotes erd
+\end_inset
+
+ Package containing a function 
+\begin_inset Quotes eld
+\end_inset
+
+addone
+\begin_inset Quotes erd
+\end_inset
+
+ that will use the 
+\begin_inset Quotes eld
+\end_inset
+
+Caddone
+\begin_inset Quotes erd
+\end_inset
+
+ function in C.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+addone
+\begin_inset Quotes erd
+\end_inset
+
+ function is:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+addone <- function(x){
+\end_layout
+
+\begin_layout Plain Layout
+
+temp <- .C("Caddone", as.double(x), as.integer(length(x)))
+\end_layout
+
+\begin_layout Plain Layout
+
+return(temp[[1]])
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+Then in the 
+\begin_inset Quotes eld
+\end_inset
+
+src
+\begin_inset Quotes erd
+\end_inset
+
+ folder under 
+\begin_inset Quotes eld
+\end_inset
+
+Cdemo
+\begin_inset Quotes erd
+\end_inset
+
+ folder, we add a file 
+\begin_inset Quotes eld
+\end_inset
+
+Cadd.c
+\begin_inset Quotes erd
+\end_inset
+
+ to provide the C code for the function 
+\begin_inset Quotes eld
+\end_inset
+
+Caddone
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Cadd.c
+\begin_inset Quotes erd
+\end_inset
+
+ file is
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+void Caddone(double *x, int *length){
+\end_layout
+
+\begin_layout Plain Layout
+
+  for(int i=0; i<*length; i++){ x[i] = x[i]+1;   }}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+Then you can build up the package and install it like what we did before.
+\begin_inset Newline newline
+\end_inset
+
 
 \end_layout
 
