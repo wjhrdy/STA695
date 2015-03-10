@@ -3684,7 +3684,7 @@ This will compile all the necessary information and create a zip file which
 \end_layout
 
 \begin_layout Enumerate
-Building a package for other operating systems
+Building a package tar.gz file
 \begin_inset Newline newline
 \end_inset
 
@@ -3692,7 +3692,7 @@ Building a package for other operating systems
 \begin_inset Newline newline
 \end_inset
 
-To build a package for something other than a Windows computer, use
+To build a package as a tar.gz file, use
 \begin_inset Newline newline
 \end_inset
 
