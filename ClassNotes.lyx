@@ -218,15 +218,7 @@ install.packages("Rmpfr")
 \end_layout
 
 \begin_layout Plain Layout
-install.packages(
-\begin_inset Quotes eld
-\end_inset
-
-knitr
-\begin_inset Quotes erd
-\end_inset
-
-)
+install.packages("knitr")
 \end_layout
 
 \begin_layout Plain Layout
@@ -1093,7 +1085,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\,upper)$
+\begin_inset Formula $(lower,\, upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1106,7 +1098,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
 \end_inset
 
 .
@@ -1129,7 +1121,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\,u)$
+\begin_inset Formula $(l,\, u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1778,7 +1770,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
