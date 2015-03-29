@@ -3601,7 +3601,7 @@ Rcmd check STA695MZ
 Notice:
 \series default
  The checks are quite strict.
- A package will often work ok even if it doesn’t pass these tests.
+ A package will often work OK even if it doesn't pass these tests.
  But it is good practice to build packages that do satisfy these tests as
  it may save problems later.
 \end_layout
@@ -3914,10 +3914,251 @@ end{verbatim}
 \end_inset
 
 Then you can build up the package and install it like what we did before.
+\end_layout
+
+\begin_layout Section
+Big Data Analysis:
+\end_layout
+
+\begin_layout Standard
+After the begging of the digital age about fifteen years ago, big data analysis
+ became one of the most challenging problem in Statistics.
+ Nowadays we can store a huge data in computers and keep it for a long time.
+ We can also consider storing every single variable (or observation) no
+ matter how important that variable is.
+ An example of a big data is financial data ( oil prices, stocks, banking,
+ dealers ...).
+ This kind of data is always very huge and involve a lot of variables that
+ affect everyday prices.
+ An other example of big data is the bioinformatics data.
+ Bioinformatics studies focus on analyzing and correlating genomic and proteomic
+ information.
+ As increasingly large amounts of genomic information, including both genomic
+ sequences and expressed gene sequences, becomes available, statisticians
+ face more difficulties to deal with this kind of data.
+ Also customers behaviors (grocery stores, restaurants, services...) and internet
+ users preferences (Google, yahoo, amazon, ...) are very huge data, and studying
+ this data make advertising much more specific and targeting.On the other
+ hand, new technologies allow us to read different types of data ( numeric,
+ text, pictures, voice, and video).
+ This makes analysis even more complicated.
+ 
+\end_layout
+
+\begin_layout Standard
+So the statistical problem is how to build a model to explain and predict
+ the future of studied phenomenon.
+ And for sure, statisticians need to have the appropriate tools ( powerful
+ computers with huge data storage, and efficient statistical softwares)
+ to deal with this kind of data.
+ In other words, if you have a statistical model with thousands of predictor
+ variables, how to choose the most influential predictors to use in your
+ model? Or how to reduce the dimension of your data without losing of any
+ essential information?
+\end_layout
+
+\begin_layout Subsection
+Betting strategies in gambling:
+\end_layout
+
+\begin_layout Standard
+Betting strategies in gambling is one of the big data problems nowadays.
+ For instance, building a model to better predict the best betting strategies
+ on horse racing encounter dealing with hundreds of predictor variables.
+ One of the common statistical methods to analyze this data is to build
+ a logistic regression model or a probit model (in probit model we use normal
+ cdf as a link function) to predict the future outcomes of gambling games.
 \begin_inset Newline newline
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+That is, if we have 12 horses in a each race, and consider that we have
+ the outcomes of a certain two years of everyday's races of those 12 horses
+ with all predictor variables that might significantly affect the race outcomes.T
+hen by the the end of each race each horse has its own rank (running time)
+ and we are going to treat this ranks (running times) as our response variable.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One of the logistic regression models that used to study these data is the
+ Conditional Logistic Regression Model or The Stratified Cox Model, which
+ is a logistic regression model that maximizes the conditional likelihood.
+ Let 
+\begin_inset Formula $Y_{i},\, i=1,2,...,12$
+\end_inset
+
+ represent the rank (or the running times) of each horse after each race.
+ And let's assume that we are interested in computing the probability of
+ winning of each horse, i.e.
+ 
+\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12})),\,\forall\, i=1,2,...,12$
+\end_inset
+
+.
+ Then our goal is to find the values of the parameters that maximize this
+ probability.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we consider that 
+\begin_inset Formula $Y_{i's}$
+\end_inset
+
+ are independent exponential random variables with rates 
+\begin_inset Formula $\lambda_{i's}\,\forall\, i=1,2,...,12$
+\end_inset
+
+ then according to the conditional logistic model:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12}))=\frac{\lambda_{i}}{\sum_{k=1}^{12}\lambda_{k}},\,\forall\, i=1,2,...,12$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ is the strength of horse 
+\begin_inset Formula $i$
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda_{i}=e^{-(\beta_{1}^{(i)}X_{1}+\beta_{2}^{(i)}X_{2}+\cdots+\beta_{p}^{(i)}X_{p})}$
+\end_inset
+
+, and 
+\begin_inset Formula $p$
+\end_inset
+
+ is the number of predictors.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\beta_{j}^{(i)}:$
+\end_inset
+
+ The regression coefficient of predictor 
+\begin_inset Formula $j$
+\end_inset
+
+ with 
+\begin_inset Formula $j=1,2,...,p$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So that we can make the probability of what we have observed in real life
+ as high as possible by maximizing 
+\begin_inset Formula $\frac{\lambda_{i}}{\sum_{k=1}^{12}\lambda_{k}}$
+\end_inset
+
+ .
+ To do this we need to find the values of the unknown parameters 
+\begin_inset Formula $\beta_{j's}$
+\end_inset
+
+ that maximize 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ using m.l.e or any other method of optimization to estimate the value of
+ 
+\begin_inset Formula $\beta_{j's}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+However in reality we are not only interested in which horse win the race,
+ but we want to figure out the probability of 12 horses crossed the finish
+ line in a certain order ( say 4, 6, 1, 5, 7, 11, 2, 3, 9, 12, 10, and 8).
+ Then the probability of this order is:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+P(Y_{4} & <Y_{6}<Y_{1}<Y_{5}<Y_{7}<Y_{11}<Y_{2}<Y_{3}<Y_{9}<Y_{10}<Y_{8})\\
+= & P(Y_{4}<(min(Y_{1},Y_{2},...,Y_{12}))\times P(Y_{6}<(min(Y_{1},Y_{2},Y_{3},Y_{5}...,Y_{12}))\times\cdots\times P(Y_{8}<(min(Y_{8}))\\
+= & \frac{\lambda_{4}}{\sum_{k=1}^{12}\lambda_{k}}\times\frac{\lambda_{6}}{\sum_{\begin{array}{c}
+k=1\\
+k\ne4
+\end{array}}^{12}\lambda_{k}}\times\cdots\times\frac{\lambda_{8}}{\lambda_{8}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The first equality follows from the independence between 
+\begin_inset Formula $Y_{i's}$
+\end_inset
+
+ and the memoryless property of exponential random variable.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then the product of all probabilities of the observed orders of all races
+ during the two years period of study is the likelihood.
+ Then we can find the values of 
+\begin_inset Formula $\beta_{j's}$
+\end_inset
+
+ that maximize this likelihood.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that we might consider only the first five or six horses in each race
+ to calculate the probability for simplicity.
+ Also note that 
+\begin_inset Formula $Y_{i's}$
+\end_inset
+
+ not always exponentially distributed, they may follow Weibull distribution
+ or normal distribution.
 \end_layout
 
 \end_body
