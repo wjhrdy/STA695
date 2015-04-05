@@ -4161,5 +4161,198 @@ Note that we might consider only the first five or six horses in each race
  or normal distribution.
 \end_layout
 
+
+\begin_layout Section
+High-dimensional Reduction
+\end_layout
+
+\begin_layout Standard
+A high-dimensional model is
+\begin_inset Formula 
+\begin{align*}
+Y_{i} & =\alpha+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{10,000}X_{10,000i}+\epsilon_{i}\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Where 
+\begin_inset Formula $i=1,2,\cdots,n$
+\end_inset
+
+ are numbers of patients/tissues...
+ 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+'s are normalized.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In real world, the model is unrealistic because of the lack of degrees of
+ freedom.
+ In fact, most of the 
+\begin_inset Formula $\beta$
+\end_inset
+
+'s are irrelevant to the outcome, many of these 
+\begin_inset Formula $\beta$
+\end_inset
+
+'s are close to 0.
+ So select the relevant 
+\begin_inset Formula $\beta$
+\end_inset
+
+'s becomes one of the important issue.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem raises now: even for only 9000 genes, picking 10 relavent genes
+ has 
+\begin_inset Formula $\left(\begin{array}{c}
+9,000\\
+10
+\end{array}\right)$
+\end_inset
+
+ different ways.
+ The combinations are huge.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The idea is to minimize the RSS(residual sum of squares), 
+\begin_inset Formula $\sum_{i=1}^{n}(Y_{i}-\hat{Y_{i}}(\beta's))^{2}$
+\end_inset
+
+ subjects to, for example, 
+\begin_inset Formula $\#\beta's\le10$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, the we still face the same problem of too many combinations.
+ To overcome the difficulty, firstly, based on our present knowledge, we
+ can keep some variables like gender, age, etc in the model and do the regressio
+n, create a new 
+\begin_inset Formula $Y_{i}'$
+\end_inset
+
+ and try to minimize RSS for the new 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align*}
+Y_{i}'=Y_{i}-\hat{\alpha}-\hat{\beta_{1}X_{1i}-\cdots-\hat{\beta_{p}X_{pi}}} & =\text{other variables that we don't know if we should keep in the model}\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we introduce a new method: LASSO Regression.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Instead of restrict the number of 
+\begin_inset Formula $\beta$
+\end_inset
+
+'s, we now minimize RSS subjects to 
+\begin_inset Formula $\sum_{i=1}^{n}|\beta_{i}|\le10$
+\end_inset
+
+.
+ We can also subjects to, for example 
+\begin_inset Formula $\sum_{i=1}^{n}|\beta_{i}|^{2}\le10$
+\end_inset
+
+(Ridge Regression), or even 
+\begin_inset Formula $\sum_{i=1}^{n}|\beta_{i}|^{\alpha}\le\text{some constant}.$
+\end_inset
+
+ But after some analysis, we know that only a convex minimize function subject
+ to a convex function is solvable, which means it will give you a sparse
+ solution, makes most ot 
+\begin_inset Formula $\beta's=0.$
+\end_inset
+
+ And LASSO regression would be a good choice while Ridge regression is not
+ sparse.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(GRAPH NEEDED)
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To solve LASSO regression, it's equivalent to solve: for a viven 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, 
+\begin_inset Formula $\min\left[\sum(Y_{i}-\hat{Y_{i}})^{2}+\lambda\sum_{i=1}^{n}|\beta_{i}|\right]$
+\end_inset
+
+.
+ The choice of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is quite important, where larger 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ implies few 
+\begin_inset Formula $\beta\ne0$
+\end_inset
+
+ and smaller 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ implies many 
+\begin_inset Formula $\beta\ne0.$
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
