@@ -4115,7 +4115,7 @@ However in reality we are not only interested in which horse win the race,
 \begin_inset Formula 
 \begin{align*}
 P(Y_{4} & <Y_{6}<Y_{1}<Y_{5}<Y_{7}<Y_{11}<Y_{2}<Y_{3}<Y_{9}<Y_{10}<Y_{8})\\
-= & P(Y_{4}<(min(Y_{1},Y_{2},...,Y_{12}))\times P(Y_{6}<(min(Y_{1},Y_{2},Y_{3},Y_{5}...,Y_{12}))\times\cdots\times P(Y_{8}<(min(Y_{8}))\\
+= & P(Y_{4}<min(Y_{1},Y_{2},...,Y_{12}))\times P(Y_{6}<min(Y_{1},Y_{2},Y_{3},Y_{5}...,Y_{12}))\times\cdots\times P(Y_{8}<min(Y_{8}))\\
 = & \frac{\lambda_{4}}{\sum_{k=1}^{12}\lambda_{k}}\times\frac{\lambda_{6}}{\sum_{\begin{array}{c}
 k=1\\
 k\ne4
@@ -4160,7 +4160,6 @@ Note that we might consider only the first five or six horses in each race
  not always exponentially distributed, they may follow Weibull distribution
  or normal distribution.
 \end_layout
-
 
 \begin_layout Section
 High-dimensional Reduction
