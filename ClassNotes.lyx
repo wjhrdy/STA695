@@ -4165,6 +4165,10 @@ Note that we might consider only the first five or six horses in each race
 High-dimensional Reduction
 \end_layout
 
+\begin_layout Subsection
+Regression Model
+\end_layout
+
 \begin_layout Standard
 A high-dimensional model is
 \begin_inset Formula 
@@ -4257,13 +4261,10 @@ n, create a new
 \end_inset
 
  and try to minimize RSS for the new 
-\begin_inset Formula $Y_{i}$
-\end_inset
-
- 
 \begin_inset Formula 
 \begin{align*}
-Y_{i}'=Y_{i}-\hat{\alpha}-\hat{\beta_{1}X_{1i}-\cdots-\hat{\beta_{p}X_{pi}}} & =\text{other variables that we don't know if we should keep in the model}\\
+Y_{i}'= & Y_{i}-\hat{\alpha}-\hat{\beta_{1}}X_{1i}-\cdots-\hat{\beta_{p}}X_{pi}\\
+= & \text{other variables that we don't know if we should keep in the model}
 \end{align*}
 
 \end_inset
@@ -4271,17 +4272,15 @@ Y_{i}'=Y_{i}-\hat{\alpha}-\hat{\beta_{1}X_{1i}-\cdots-\hat{\beta_{p}X_{pi}}} & =
 
 \end_layout
 
-\begin_layout Standard
-Now we introduce a new method: LASSO Regression.
- 
-\begin_inset Newline newline
-\end_inset
-
-
+\begin_layout Subsection
+LASSO Regression
 \end_layout
 
 \begin_layout Standard
-Instead of restrict the number of 
+
+\series bold
+Now we introduce a new method --- LASSO Regression: Instead of restrict
+ the number of 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -4290,11 +4289,21 @@ Instead of restrict the number of
 \end_inset
 
 .
- We can also subjects to, for example 
+ 
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can also subjects to, for example 
 \begin_inset Formula $\sum_{i=1}^{n}|\beta_{i}|^{2}\le10$
 \end_inset
 
-(Ridge Regression), or even 
+ ( Ridge Regression ), or even 
 \begin_inset Formula $\sum_{i=1}^{n}|\beta_{i}|^{\alpha}\le\text{some constant}.$
 \end_inset
 
@@ -4314,10 +4323,10 @@ Instead of restrict the number of
 
 \begin_layout Standard
 (GRAPH NEEDED)
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
-
+\begin_layout Subsection
+Cross Validation
 \end_layout
 
 \begin_layout Standard
@@ -4330,7 +4339,48 @@ To solve LASSO regression, it's equivalent to solve: for a viven
 \end_inset
 
 .
- The choice of 
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\lambda\sum_{i=1}^{n}|\beta_{i}|$
+\end_inset
+
+ is called LASSO penalty term and 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is tuning parameter.
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+The choice of 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -4338,16 +4388,124 @@ To solve LASSO regression, it's equivalent to solve: for a viven
 \begin_inset Formula $\lambda$
 \end_inset
 
- implies few 
-\begin_inset Formula $\beta\ne0$
+ could lead to few 
+\begin_inset Formula $\beta's\ne0$
 \end_inset
 
  and smaller 
 \begin_inset Formula $\lambda$
 \end_inset
 
- implies many 
-\begin_inset Formula $\beta\ne0.$
+ could lead to more 
+\begin_inset Formula $\beta's\ne0.$
+\end_inset
+
+ The pick up of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is called 
+\series bold
+cross validation
+\series default
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum_{i=1}^{n}(Y_{i}-\hat{Y_{i}}(\beta's))^{2}=-\text{logLik}$
+\end_inset
+
+ if 
+\begin_inset Formula $Y\sim\text{Normal}$
+\end_inset
+
+, it can be replaced by any convex function in 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+min
+\begin_inset Formula $\left\{ \text{convex}(\beta)+\lambda\sum_{j=1}^{p}|\beta_{j}|\right\} $
+\end_inset
+
+.
+ It implies 
+\begin_inset Formula $\text{convex}(\beta)=-\text{logLik}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+require(penalized)
+\end_layout
+
+\begin_layout Plain Layout
+
+data(nki70)
+\end_layout
+
+\begin_layout Plain Layout
+
+pen <- penalized(Surv(time,event),penalized=nki70[,8:77],
+\end_layout
+
+\begin_layout Plain Layout
+
+                 unpenalized = ~ER+Age+Diam+N+Grade,
+\end_layout
+
+\begin_layout Plain Layout
+
+                 data=nki70, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                 lambda1=1,steps=5)
+\end_layout
+
+\begin_layout Plain Layout
+
+plotpath(pen)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
 \end_inset
 
 
@@ -4355,4 +4513,3 @@ To solve LASSO regression, it's equivalent to solve: for a viven
 
 \end_body
 \end_document
-
