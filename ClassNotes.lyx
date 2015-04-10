@@ -8,6 +8,7 @@
 
 \usepackage{amsfonts}%Typical math resource packages
 \usepackage{framed}\usepackage{color}
+\usepackage[english]{babel}
 
 %\usepackage{setspace}
 \newtheorem{theorem}{Theorem}[section]
@@ -219,6 +220,10 @@ install.packages("Rmpfr")
 
 \begin_layout Plain Layout
 install.packages("knitr")
+\end_layout
+
+\begin_layout Plain Layout
+install.packages("penalized")
 \end_layout
 
 \begin_layout Plain Layout
@@ -4442,6 +4447,10 @@ min
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
 \begin_inset ERT
 status open
 
@@ -4451,7 +4460,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<warning=FALSE,message=FALSE>>=
+<<warning=FALSE,message=FALSE,results='hide'>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -4460,7 +4469,7 @@ status open
 
 \begin_layout Plain Layout
 
-require(penalized)
+library(penalized)
 \end_layout
 
 \begin_layout Plain Layout
@@ -4490,7 +4499,357 @@ pen <- penalized(Surv(time,event),penalized=nki70[,8:77],
 
 \begin_layout Plain Layout
 
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+pen
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
 plotpath(pen)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cox Model and Horse Racing Data
+\end_layout
+
+\begin_layout Standard
+In this section, the horse racing data and related notes are required and
+ has been posted on this website: http://www.ms.uky.edu/~mai/sta705.html.
+ The data file is a comma separated values file (*.csv) which gets rid of
+ extra EXCEL features.
+ After reading the file into R, we could take a quick look at its dimention,
+ variable names, and also the first 6 rows.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(RCurl)
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- getURL("http://www.ms.uky.edu/~mai/sta705/ZhouM2.csv")
+\end_layout
+
+\begin_layout Plain Layout
+
+ZhouM2 <- read.csv(text = x, header=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+dim(ZhouM2)
+\end_layout
+
+\begin_layout Plain Layout
+
+names(ZhouM2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+head(ZhouM2)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+To fit the data with a propriate model, let's start with Exponential Regression
+ model:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Y_{i}\sim Exponential(\lambda_{i})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ is the survival time, 
+\begin_inset Formula $\lambda_{i}>0$
+\end_inset
+
+ is the hazard, 
+\begin_inset Formula $i=1,2,\cdots,n$
+\end_inset
+
+.
+ A smaller 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ makes the subject live longer, and a larger 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ makes the subject live shorter.
+ It is also true that 
+\begin_inset Formula $P(Exp(\lambda)\le t)=1-e^{-\lambda t},$
+\end_inset
+
+ 
+\begin_inset Formula $\lambda_{i}=e^{\beta_{0}+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{p}X_{pi}}$
+\end_inset
+
+.
+ Take the log of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, we will get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+log\lambda_{i}=\beta_{0}+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{p}X_{pi}
+\]
+
+\end_inset
+
+There is no random variable in this relation because there's no 
+\begin_inset Formula $\varepsilon_{i}$
+\end_inset
+
+.
+ For the Exponential Regression model, proc lifetest in SAS and survreg
+ in R can find its MLE for us.
+ But we need 
+\begin_inset Formula $Y_{i}'s$
+\end_inset
+
+, the survival time, to fit the model.
+ Since we only have the ranks of horses instead of the running time, Exponential
+ Regression seems not appropriate in this case.
+ Cox model, however, is a perfect option.
+ It's similar with Exponential Regression model, but it only uses ranks
+ of 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In Cox model, we do not want exponential distribution because of its memoryless
+ property.
+ So a monotone transformation (e.g.
+ square, square root, log, etc.) of the 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ needs to be performed, and then we will have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+g(Y_{i})\quad where\; Y_{i}\sim Exponential(\lambda_{i})
+\]
+
+\end_inset
+
+After the transformation, it no longer has the memoryless property and loses
+ magnitude, but we are able to keep the orders of 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+.
+ In terms of the horse racing data, a large 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ means a low rank which is good, and a small 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ indicates that the horse falls behind and has a high rank.
+\end_layout
+
+\begin_layout Standard
+Another way to understand the Cox model is to look at it in the survival
+ analysis point of view.
+ Then we will have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+h_{i}(t)=h_{0}(t)e^{\beta X_{i}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $h_{0}(t)$
+\end_inset
+
+ is the baseline, and the exponential component is a multiplication of the
+ baseline.
+\end_layout
+
+\begin_layout Standard
+For horse racing, it only makes sense if we compare the ranks within one
+ race.
+ So a stratified Cox model should be used this time.
+ Here is the R code.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<warning=FALSE,message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+A <- ZhouM2[ ,3] == ZhouM2[1,3] # get all turf A data
+\end_layout
+
+\begin_layout Plain Layout
+
+ZhouM2A <- ZhouM2[A, ]
+\end_layout
+
+\begin_layout Plain Layout
+
+dim(ZhouM2A)
+\end_layout
+
+\begin_layout Plain Layout
+
+names(ZhouM2A) #"Rank" is g(y_i)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+library(survival)
+\end_layout
+
+\begin_layout Plain Layout
+
+## Cox proportional hazard regression model
+\end_layout
+
+\begin_layout Plain Layout
+
+## want to determine rank, with the strata of date and race number
+\end_layout
+
+\begin_layout Plain Layout
+
+coxph(Surv(Rank) ~ FinalOdds + WtCarried + JWinPer + 
+\end_layout
+
+\begin_layout Plain Layout
+
+        JPlacePer + TWinPer + strata(Raceno + DateValue), data = ZhouM2A)
 \end_layout
 
 \begin_layout Plain Layout
@@ -4509,6 +4868,117 @@ plotpath(pen)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In the output we want a high likelihodd ratio.
+ And certainly one can create itneraction terms, or transformations of the
+ terms to increase it.
+ 
+\end_layout
+
+\begin_layout Section
+PGA and OGA
+\end_layout
+
+\begin_layout Standard
+For a high dimentional model 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Y_{i}=\beta_{0}+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{p}X_{pi}+\varepsilon_{i}\qquad i=1,\,2,\,\cdots,\, n
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p=1000,\, n=200$
+\end_inset
+
+ , we can use LASSO to do the analysis.
+ There's a competitive method called PGA, or Step Forward procedure, can
+ also be applied to estimate the parameters.
+\end_layout
+
+\begin_layout Enumerate
+Find current residuals and current 
+\begin_inset Formula $\hat{\beta}$
+\end_inset
+
+.
+ To begin with, use 
+\begin_inset Formula $Y-\bar{Y}$
+\end_inset
+
+ as the initial residuals and 
+\begin_inset Formula $0$
+\end_inset
+
+ as the initial 
+\begin_inset Formula $\hat{\beta_{i}}'s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Maximize 
+\begin_inset Formula $\left[corr(residual,\, X_{j})\right]^{2}$
+\end_inset
+
+and record the 
+\begin_inset Formula $X_{j}$
+\end_inset
+
+ that maximizes it.
+ Do a simple regression on residuals and 
+\begin_inset Formula $X_{j}$
+\end_inset
+
+, then we will find out its parameter 
+\begin_inset Formula $\beta_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Update 
+\begin_inset Formula $\hat{\beta_{i}}'s$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\hat{\beta}_{new}[j]=\hat{\beta}[j]+\lambda\beta_{j}$
+\end_inset
+
+ where 
+\begin_inset Formula $0<\lambda<1$
+\end_inset
+
+ and it's a tunning parameter.
+\end_layout
+
+\begin_layout Enumerate
+Compute residuals again and repeat the process.
+\end_layout
+
+\begin_layout Standard
+One disadvantage of PGA is that we don't know when it's going to stop.
+ Thus, a PGA+OGA procudure is recommanded.
+ OGA stands for Orthogonal Greedy Algorithm.
+ It usually produces sparse solutions (a lot of 
+\begin_inset Formula $0$
+\end_inset
+
+ in 
+\begin_inset Formula $\hat{\beta_{i}}'s$
+\end_inset
+
+ ), which are indeed what we want.
+ 
 \end_layout
 
 \end_body
