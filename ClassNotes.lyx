@@ -227,6 +227,42 @@ install.packages("penalized")
 \end_layout
 
 \begin_layout Plain Layout
+install.packages(
+\begin_inset Quotes eld
+\end_inset
+
+RCurl
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+install.packages(
+\begin_inset Quotes eld
+\end_inset
+
+ELYP
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+install.packages(
+\begin_inset Quotes eld
+\end_inset
+
+survival
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
 in r before compiling
 \end_layout
 
