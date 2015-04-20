@@ -1090,7 +1090,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $(lower,\, upper)$
+\begin_inset Formula $(lower,\,upper)$
 \end_inset
 
 , and you want a confidence interval for 
@@ -1103,7 +1103,7 @@ If you have a confidence interval for
 \end_inset
 
 , 
-\begin_inset Formula $\left(log(lower),\, log(upper)\right)$
+\begin_inset Formula $\left(log(lower),\,log(upper)\right)$
 \end_inset
 
 .
@@ -1126,7 +1126,7 @@ This property even holds for transformations which aren't monotone.
 \end_inset
 
 , 
-\begin_inset Formula $(l,\, u)$
+\begin_inset Formula $(l,\,u)$
 \end_inset
 
 , then you can find your transformed confidence interval by the following
@@ -1775,7 +1775,7 @@ We know from survival analysis that a random variable,
 , following a Weibull distribution will satisfy the following probability:
 \begin_inset Formula 
 \[
-P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\, t\geq0\,\textrm{and}\,\lambda,\beta>0
+P\left(X>t\right)=e^{-\left(\lambda t\right)^{\beta}}\,\,\,\textrm{for}\,t\geq0\,\textrm{and}\,\lambda,\beta>0
 \]
 
 \end_inset
@@ -3997,14 +3997,14 @@ One of the logistic regression models that used to study these data is the
  Conditional Logistic Regression Model or The Stratified Cox Model, which
  is a logistic regression model that maximizes the conditional likelihood.
  Let 
-\begin_inset Formula $Y_{i},\, i=1,2,...,12$
+\begin_inset Formula $Y_{i},\,i=1,2,...,12$
 \end_inset
 
  represent the rank (or the running times) of each horse after each race.
  And let's assume that we are interested in computing the probability of
  winning of each horse, i.e.
  
-\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12})),\,\forall\, i=1,2,...,12$
+\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12})),\,\forall\,i=1,2,...,12$
 \end_inset
 
 .
@@ -4022,7 +4022,7 @@ If we consider that
 \end_inset
 
  are independent exponential random variables with rates 
-\begin_inset Formula $\lambda_{i's}\,\forall\, i=1,2,...,12$
+\begin_inset Formula $\lambda_{i's}\,\forall\,i=1,2,...,12$
 \end_inset
 
  then according to the conditional logistic model:
@@ -4033,7 +4033,7 @@ If we consider that
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12}))=\frac{\lambda_{i}}{\sum_{k=1}^{12}\lambda_{k}},\,\forall\, i=1,2,...,12$
+\begin_inset Formula $P(Y_{i}<min(Y_{i},Y_{2},...,Y_{12}))=\frac{\lambda_{i}}{\sum_{k=1}^{12}\lambda_{k}},\,\forall\,i=1,2,...,12$
 \end_inset
 
 
@@ -4450,7 +4450,6 @@ min
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset ERT
 status open
 
@@ -4512,7 +4511,6 @@ pen <- penalized(Surv(time,event),penalized=nki70[,8:77],
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset ERT
 status open
 
@@ -4549,7 +4547,6 @@ pen
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset ERT
 status open
 
@@ -4743,7 +4740,7 @@ In Cox model, we do not want exponential distribution because of its memoryless
 \begin_layout Standard
 \begin_inset Formula 
 \[
-g(Y_{i})\quad where\; Y_{i}\sim Exponential(\lambda_{i})
+g(Y_{i})\quad where\;Y_{i}\sim Exponential(\lambda_{i})
 \]
 
 \end_inset
@@ -4888,13 +4885,13 @@ For a high dimentional model
 \begin_layout Standard
 \begin_inset Formula 
 \[
-Y_{i}=\beta_{0}+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{p}X_{pi}+\varepsilon_{i}\qquad i=1,\,2,\,\cdots,\, n
+Y_{i}=\beta_{0}+\beta_{1}X_{1i}+\beta_{2}X_{2i}+\cdots+\beta_{p}X_{pi}+\varepsilon_{i}\qquad i=1,\,2,\,\cdots,\,n
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $p=1000,\, n=200$
+\begin_inset Formula $p=1000,\,n=200$
 \end_inset
 
  , we can use LASSO to do the analysis.
@@ -4925,7 +4922,7 @@ Find current residuals and current
 
 \begin_layout Enumerate
 Maximize 
-\begin_inset Formula $\left[corr(residual,\, X_{j})\right]^{2}$
+\begin_inset Formula $\left[corr(residual,\,X_{j})\right]^{2}$
 \end_inset
 
 and record the 
@@ -4958,7 +4955,7 @@ Update
 \begin_inset Formula $0<\lambda<1$
 \end_inset
 
- and it's a tunning parameter.
+ and it's a tuning parameter.
 \end_layout
 
 \begin_layout Enumerate
@@ -4979,6 +4976,866 @@ One disadvantage of PGA is that we don't know when it's going to stop.
 
  ), which are indeed what we want.
  
+\end_layout
+
+\begin_layout Section
+Likelihood problems and Partial Likelihood
+\end_layout
+
+\begin_layout Subsection
+Likelihood Problems
+\end_layout
+
+\begin_layout Subsubsection
+Neymann-Scott Example
+\end_layout
+
+\begin_layout Standard
+This is an example where the likelihood equation does not work in producing
+ a consistent estimator.
+ Suppose we have the following sample:
+\begin_inset Formula 
+\[
+x_{11},x_{12},\ldots,x_{16}\sim N(\mu_{1},\sigma^{2})
+\]
+
+\end_inset
+
+ The fact that we have a sample size of 6 is arbitrary.
+ With this sample the MLE's for 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ are
+\begin_inset Formula 
+\[
+\hat{\mu}_{1}=\bar{x}_{1}\ and\ \hat{\sigma^{2}}=\frac{1}{6}\sum_{i=1}^{6}(x_{1i}-\bar{x}_{1})^{2}
+\]
+
+\end_inset
+
+ these are just the usual MLE's for a normal distribution.
+ Now suppose we add the following to our sample 
+\begin_inset Formula 
+\[
+x_{21},x_{22},\ldots,x_{26}\sim N(\mu_{2},\sigma^{2})
+\]
+
+\end_inset
+
+ Our MLE for 
+\begin_inset Formula $\mu_{1}$
+\end_inset
+
+ stays the same and we have a similar MLE for 
+\begin_inset Formula $\mu_{2}$
+\end_inset
+
+, but our 
+\begin_inset Formula $\hat{\sigma^{2}}$
+\end_inset
+
+ will change.
+ 
+\begin_inset Formula 
+\[
+\hat{\mu}_{2}=\bar{x}_{2}\ and\ \hat{\sigma^{2}}=\frac{\sum_{i=1}^{6}(x_{1i}-\bar{x}_{1})^{2}+\sum_{i=1}^{6}(x_{2i}-\bar{x}_{2})^{2}}{12}
+\]
+
+\end_inset
+
+ Following in this fashion, if we have a total of n samples with this similar
+ distribution
+\begin_inset Formula 
+\[
+x_{j1},x_{j2},\ldots,x_{j6}\sim N(\mu_{j},\sigma^{2})
+\]
+
+\end_inset
+
+ then we will have the following MLEs
+\begin_inset Formula 
+\[
+\hat{\mu}_{j}=\bar{x}_{j}\ for\ i=1,2,\ldots,n
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{\sigma^{2}}=\frac{1}{6n}\sum_{j=1}^{n}\sum_{i=1}^{6}(x_{ji}-\bar{x}_{j})^{2}
+\]
+
+\end_inset
+
+ The problem with this estimator for 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ is that it is not consistent.
+ We know that 
+\begin_inset Formula $\frac{\sum_{i=1}^{6}(x_{ji}-\bar{x}_{j})^{2}}{\sigma^{2}}=y$
+\end_inset
+
+ is distributed as a 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ with 5 degrees of freedom.
+ Thus we can say 
+\begin_inset Formula $E(\hat{\sigma^{2})}=\frac{n\sigma^{2}y}{6n}$
+\end_inset
+
+.
+ By the law of large numbers we know that as 
+\begin_inset Formula $n\rightarrow\infty$
+\end_inset
+
+, 
+\begin_inset Formula $E(\hat{\sigma^{2}})\rightarrow\frac{5\sigma^{2}}{6}\neq\sigma^{2}$
+\end_inset
+
+.
+ Therefore 
+\begin_inset Formula $\hat{\sigma^{2}}$
+\end_inset
+
+ is not a consistent estimator of 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+.
+ And this is a problem.
+ The reason that the MLE does not work in this example is because of the
+ existence of infinitely many nuisance parameters, 
+\begin_inset Formula $\mu_{j}$
+\end_inset
+
+'s.
+ All of the degrees of freedom are used up in estimating these infinitely
+ many parameters that we are not interested in.
+\end_layout
+
+\begin_layout Subsubsection
+Another Problem with the Likelihood
+\end_layout
+
+\begin_layout Standard
+Let us suppose that we have the following sample:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{1},x_{2},\ldots,x_{n}\sim f(\cdot)
+\]
+
+\end_inset
+
+ In this case our parameter of interest is the whole function 
+\begin_inset Formula $f(\cdot)$
+\end_inset
+
+.
+ This produces a problem, because 
+\begin_inset Formula $max_{f(\cdot)}\{\prod_{i=1}^{n}f(x_{i})=\infty$
+\end_inset
+
+.
+ You can always find a function that is higher than your previously found
+ function.
+\end_layout
+
+\begin_layout Standard
+The likelihood, MLE, score, and information can have problems when either
+ the number of nuisance parameters grows as 
+\begin_inset Formula $n\rightarrow\infty$
+\end_inset
+
+ or when the parameter itself is a function.
+\end_layout
+
+\begin_layout Subsection
+Cox and the Partial Likelihood
+\end_layout
+
+\begin_layout Subsubsection
+Introduction of the Partial Likelihood
+\end_layout
+
+\begin_layout Standard
+When you have a lot of nuisance parameters and the normal likelihood equation
+ does not work, you can use Cox's Partial Likelihood.
+ The example he gives has each observation consisting of the elements 
+\begin_inset Formula $(T_{i},x_{i},\delta_{i})\ for\ i=1,2,\ldots,n$
+\end_inset
+
+.
+ Where 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is the observed survival time, 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is the covariate, and 
+\begin_inset Formula $\delta_{i}$
+\end_inset
+
+ is the censor status, all related to the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ patient.
+ In this example the partial likelihood, denoted 
+\begin_inset Formula $PL$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+PL=\prod_{i=1}^{n}\left(\frac{e^{\beta x_{i}}}{\sum_{j=1}^{n}e^{\beta x_{i}}I[T_{j}\geq T_{i}]}\right)^{\delta_{i}}
+\]
+
+\end_inset
+
+ This is in a sense related to the probability of the rank of the 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+'s, not the 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+'s themselves.
+\end_layout
+
+\begin_layout Standard
+We have a model assumption that 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ has a hazard function given by 
+\begin_inset Formula 
+\[
+h_{i}(t)=h_{0}(t)e^{\beta x_{i}}
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $h_{i}(t)$
+\end_inset
+
+ represents the hazard function of the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ patient and 
+\begin_inset Formula $h_{0}(t)$
+\end_inset
+
+ is the baseline hazard function.
+ Here 
+\begin_inset Formula $\beta$
+\end_inset
+
+ is the parameter of interest and 
+\begin_inset Formula $h_{0}(t)$
+\end_inset
+
+ is a nuisance parameter of infinite dimension.
+\end_layout
+
+\begin_layout Standard
+The question we need to ask ourselves is if this baseline hazard function
+ is going to destroy the use of the likelihood.
+\end_layout
+
+\begin_layout Subsubsection
+Revisiting the Hazard Function
+\end_layout
+
+\begin_layout Standard
+The hazard function is of the form 
+\begin_inset Formula 
+\[
+h(t)=\frac{f(t)}{1-F(t)}
+\]
+
+\end_inset
+
+ The cumulative hazard function, sometimes denoted 
+\begin_inset Formula $H(t)$
+\end_inset
+
+ is simply
+\begin_inset Formula 
+\[
+\Lambda(t)=\int h(s)ds
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Steps to Deriving the Partial Likelihood Equation
+\end_layout
+
+\begin_layout Standard
+The steps to deriving the Partial Likelihood of the Cox Model are quite
+ simple.
+\end_layout
+
+\begin_layout Enumerate
+Write down the likelihood for the Cox Model.
+ Make sure to put it in terms of the baseline hazard function, 
+\begin_inset Formula $h_{0}(\cdot)$
+\end_inset
+
+, and 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Profile out the baseline hazard function, 
+\begin_inset Formula $h_{0}(\cdot)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Produce the Partial Likelihood equation.
+\end_layout
+
+\begin_layout Standard
+Some things to point out before we go through this process is that it is
+ not clear if we are able to profile out the 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+'s in the Neymann-Scott example.
+ Also the Partial Likelihood may not work in some situations.
+ We will work through the above steps for the Cox Model.
+\end_layout
+
+\begin_layout Enumerate
+The likelihood of the Cox Model is as follows:
+\begin_inset Formula 
+\begin{align*}
+Lik & =\prod_{i=1}^{n}f(x_{i})\\
+ & =\prod_{i=1}^{n}\frac{f(x_{i})}{1-F(x_{i})}\left[1-F(x_{i})\right]\\
+ & =\prod_{i=1}^{n}h(x_{i})e^{-\Lambda(x_{i})}
+\end{align*}
+
+\end_inset
+
+ We can move from lines 2 to 3, because we know that 
+\begin_inset Formula $e^{-\Lambda(x_{i})}=1-F(x_{i})$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For some reason I do not know how we got from this step to the the following
+ one
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align*}
+Lik & =\prod_{i=1}^{n}\left\{ f_{i}(t_{i})dt*I\left[\delta_{i}=1\right]+\left[1-F_{i}(t_{i})\right]I\left[\delta_{i}=0\right]\right\} \\
+ & =\prod_{i=1}^{n}\left\{ \frac{f_{i}(t_{i})dt*e^{-\Lambda_{i}(t_{i})}}{1-F_{i}(t_{i})}I\left[\delta_{i}=1\right]+e^{-\Lambda_{i}(t_{i})}I\left[\delta_{i}=0\right]\right\} \\
+ & =\prod_{i=1}^{n}\left[h_{i}(t_{i})dt\right]^{\delta_{i}}e^{-\int_{0}^{t_{i}}h_{i}(s)ds}
+\end{align*}
+
+\end_inset
+
+ By using the Cox model assumption mentioned earlier, we can manipulate
+ the likelihood equation even more.
+\begin_inset Formula 
+\[
+Lik=\prod_{i=1}^{n}\left[h_{0}(t_{i})e^{\beta x_{i}}dt\right]^{\delta_{i}}e^{-\int_{0}^{t_{i}}h_{0}(s)e^{\beta x_{i}}ds}
+\]
+
+\end_inset
+
+ By taking the log of each side of the equation and letting 
+\begin_inset Formula $w_{i}=h_{0}(t_{i})dt$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2,\ldots,n$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+logLik(\beta,\vec{w})=\sum_{i=1}^{n}\left\{ \delta_{i}\left[\beta x_{i}+log(w_{i})\right]-e^{\beta x_{i}}\int_{0}^{t_{i}}w_{s}\right\} 
+\]
+
+\end_inset
+
+ We know that 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+must be discrete.
+ If it was continuous, there would be no maximum.
+ Therefore we can change the integral to a summation.
+ 
+\begin_inset Formula 
+\[
+logLik(\beta,\vec{w})=\sum_{i=1}^{n}\left\{ \delta_{i}\left[\beta x_{i}+log(w_{i})\right]-e^{\beta x_{i}}\sum_{s=0}^{t_{i}}w_{s}\right\} 
+\]
+
+\end_inset
+
+ In this example 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ is considered to be a nuisance parameter because it continues to grow as
+ n increases.
+ In this case the logLik still works, unlike the Neymann-Scott example.
+ Here is a reminder of what the logPL looks like, and that it does not involve
+ 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+logPL=\sum_{i=1}^{n}\delta_{i}\left[\beta x_{i}-log\left(\sum_{j=1}^{n}e^{\beta x_{i}}I\left[T_{j}\geq T_{i}\right]\right)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Profiling out the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s is based on a theorem.
+ For any given and fixed 
+\begin_inset Formula $\beta=\beta^{*}$
+\end_inset
+
+, we can find the solution to 
+\begin_inset Formula $max_{\vec{w}}\left\{ logLik(\beta^{*},\vec{w})\right\} $
+\end_inset
+
+.
+ The solution is
+\begin_inset Formula 
+\[
+w_{i}(\beta^{*})=\frac{\delta_{i}}{\sum_{j=1}^{n}e^{\beta x_{i}}I[T_{j}\geq T_{i}]}
+\]
+
+\end_inset
+
+ The values of these 
+\begin_inset Formula $w_{i}(\beta^{*})$
+\end_inset
+
+'s will be the MLEs if the 
+\begin_inset Formula $\beta^{*}$
+\end_inset
+
+ is the MLE of 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Now we can see the relationship between logLik and logPL when the solution
+ 
+\begin_inset Formula $w_{i}(\beta^{*})$
+\end_inset
+
+ is plugged in.
+\begin_inset Formula 
+\[
+logLik(\beta^{*},w_{i}(\beta^{*}))=logPL(\beta^{*})-\sum_{i=1}^{n}\delta_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this example we can use the partial likelihood if we would like to do
+ any inference such as confidence intervals and hypothesis testing just
+ involving the 
+\begin_inset Formula $\beta$
+\end_inset
+
+'s as this equation is much easier to work with.
+ However if we would like to perform any inferences involving the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s, then we would have to use the original likelihood equation.
+\end_layout
+
+\begin_layout Subsubsection
+Using R to Compute Empirical and Partial Likelihoods
+\end_layout
+
+\begin_layout Standard
+The package ELYP, written by Dr.
+ Zhou, contains a function CoxEL.
+ This function computes the empirical likelihood as well as the partial
+ likelihood for the purpose of testing the parameter 
+\begin_inset Formula $\beta$
+\end_inset
+
+ and the baseline hazard feature, which Dr.
+ Zhou defines to be lam and fun.
+\end_layout
+
+\begin_layout Standard
+This function has 6 inputs: y, d, Z, beta, lam, and fun.
+ In this case, y is equivalent to the 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ used above, d is equivalent to 
+\begin_inset Formula $\delta_{i}$
+\end_inset
+
+, Z is equivalent to 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, and beta is equivalent to 
+\begin_inset Formula $\beta^{*}$
+\end_inset
+
+.
+ The new inputs that we haven's discussed yet are lam, which is a scalar
+ used in the constraint of baseline, and fun, a function which together
+ with lam defines the feature of the baseline hazard.
+ When lam=0 there is no restriction on the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s which means that they will follow the formula 
+\begin_inset Formula $w_{i}(\beta^{*})=\frac{\delta_{i}}{\sum_{j=1}^{n}e^{\beta x_{i}}I[T_{j}\geq T_{i}]}$
+\end_inset
+
+.
+ Here is an example where y, d, and Z are defined below.
+ We will set beta equal to 1, just to run the function, and lam equal to
+ 0.
+ This means that it does not matter what function we put in, since it will
+ not affect the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s at all.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+library("ELYP")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- c(3, 5.3, 6.4, 9.1, 14.1, 15.4, 18.1, 15.3, 14, 5.8, 7.3, 14.4) 
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- c(1, 1.5, 2, 3, 4, 5, 6, 5, 4, 1, 2, 4.5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+d <- c(1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+CoxEL(y=y, d=d, Z=x, beta=1, lam=0, fun=function(t){t}) 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+A brief explanation of the output of this function.
+\end_layout
+
+\begin_layout Itemize
+d - This is a list of the inputted d values, sorted by the y values.
+\end_layout
+
+\begin_layout Itemize
+Hazw - These are your 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s.
+ Remember that 
+\begin_inset Formula $w_{i}=h_{0}(t_{i})dt$
+\end_inset
+
+ where 
+\begin_inset Formula $h_{0}(t_{i})$
+\end_inset
+
+ is your baseline hazard function.
+\end_layout
+
+\begin_layout Itemize
+mu - This is equal to 
+\begin_inset Formula $\int f(t)h_{0}(t)dt$
+\end_inset
+
+.
+ This is the value that is pulled either up or down by your lam input, where
+ f(t) is the fun input.
+\end_layout
+
+\begin_layout Itemize
+logPlik - This is the value of log partial likelihood.
+\end_layout
+
+\begin_layout Itemize
+logEmpLik - This is the value of the log empirical likelihood.
+\end_layout
+
+\begin_layout Standard
+You will notice that 
+\begin_inset Formula $logEmpLik=logPlik-\sum_{i=1}^{12}d$
+\end_inset
+
+, which matches our derivation of the partial likelihood.
+\end_layout
+
+\begin_layout Standard
+Since the beta input is not the MLE of 
+\begin_inset Formula $\beta$
+\end_inset
+
+, the Hazw output are not the MLEs of the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s.
+ This is how to find the MLE of 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+library("survival")
+\end_layout
+
+\begin_layout Plain Layout
+
+beta<-coef(coxph(Surv(y,d)~x))
+\end_layout
+
+\begin_layout Plain Layout
+
+beta
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+This gives up the true MLE of 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ This is what happens when we input this value of beta into the CoxEL function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+CoxEL(y=y, d=d, Z=x, beta=beta, lam=0, fun=function(t){t})
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You will see that the outputs changes, with the exception of the d values.
+ These Hazw's are now the MLEs of the 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s.
+ It is also important to note that this function retrieves the same value
+ for the log partial log likelihood as the unconditional likelihood given
+ by the coxph function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+coxph(Surv(y,d)~x)$loglik
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Cox Partial Likelihood is a a good way to make inferences on the non-nuisanc
+e parameters.
+ However if you would like to find the MLEs of the nuisance parameters,
+ CoxEL is a good way to find those estimates.
 \end_layout
 
 \end_body
