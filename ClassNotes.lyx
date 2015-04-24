@@ -5879,8 +5879,8 @@ e parameters.
 \end_layout
 
 \begin_layout Subsubsection
-Using R to construct confidence interval for 
-\begin_inset Formula $\beta$
+Construct confidence interval for 
+\begin_inset Formula $(\beta,\mu)$
 \end_inset
 
  from inverting log likelihood
@@ -5891,14 +5891,31 @@ First, let us look at null the hypothesis below:
 \begin_inset Formula 
 \[
 H_{0}:\begin{array}{c}
-\mbox{ 300 days survival probability for a patient with covariate }Z\\
-e^{-\varLambda_{0}(300)e^{\beta Z}}=\mu
+\mbox{ 300 days survival probability for a patient with covariate }Z\mbox{ =}c\\
+e^{-\varLambda_{0}(300)e^{\beta Z}}=c
 \end{array}.
 \]
 
 \end_inset
 
-And actually, we could decompose 
+Note that even if we have two unkown things, 
+\begin_inset Formula $\varLambda_{0}(300)$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta$
+\end_inset
+
+ in the hypothesis, the number of parameter is only equal to one.
+ And we could build up a confidence interval for the term 
+\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}$
+\end_inset
+
+ by inverting Likelihood Ratio Test (LRT).
+\begin_inset Newline newline
+\end_inset
+
+Furthermore, we could decompose 
 \begin_inset Formula $H_{0}$
 \end_inset
 
@@ -5910,18 +5927,38 @@ And actually, we could decompose
 \begin_inset Formula 
 \[
 H_{00}:\begin{array}{c}
-\varLambda_{0}(300)=\theta\\
+\mu=\varLambda_{0}(300)=\mu^{*}\\
 \beta=\beta^{*}
 \end{array}
 \]
 
 \end_inset
 
+But here we have two parameters.
+ And we could do the same thing, that is to invert LRT to get a joint confidence
+ set (a region, maybe an interval) for 
+\begin_inset Formula $(\beta,\mu)$
+\end_inset
 
-\end_layout
+.
+ Once we have the confidence set (a region), then the confidence interval
+ for 
+\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}$
+\end_inset
 
-\begin_layout Standard
-Let us focus on one possible 
+ is just the range that 
+\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}$
+\end_inset
+
+ can take on that region.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Let us focus on one specific 
 \begin_inset Formula $H_{00}$
 \end_inset
 
@@ -5929,17 +5966,13 @@ Let us focus on one possible
 \begin_inset Formula 
 \[
 H_{00}:\begin{array}{c}
-\varLambda_{0}(300)=0.2\\
+\mu=\varLambda_{0}(300)=0.2\\
 \beta=0.5
 \end{array}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 For the dataset 
 \begin_inset Quotes eld
 \end_inset
@@ -5962,9 +5995,10 @@ ELYP
 \end_inset
 
  package.
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
 \begin_inset ERT
 status open
 
@@ -6003,12 +6037,12 @@ myZ <- smallcell$arm
 @
 \end_layout
 
-\end_inset
-
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
 But we need to define 
 \begin_inset Formula $f(x)$
 \end_inset
@@ -6023,9 +6057,10 @@ But we need to define
 \end_inset
 
 .
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
 \begin_inset ERT
 status open
 
@@ -6044,16 +6079,17 @@ myfun <- function(t){as.numeric(t<=300)}
 @
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Now let's compute the likelihood
+\begin_inset Newline newline
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Now let's compute the likelihood
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -6072,13 +6108,13 @@ CoxEL(y=myy,d=myd,Z=myZ,beta=0.5,lam=0,fun=myfun)
 @
 \end_layout
 
-\end_inset
-
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Standard
-Notice that, in the above log likelihood is -500.907, but 
+\end_inset
+
+Notice that, log likelihood is -500.907, but 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -6100,7 +6136,7 @@ Notice that, in the above log likelihood is -500.907, but
 \end_inset
 
 .
- After several trials, we find out with 
+ After several trials, we find out that with 
 \begin_inset Formula $lam=-15.95$
 \end_inset
 
@@ -6108,10 +6144,11 @@ Notice that, in the above log likelihood is -500.907, but
 \begin_inset Formula $\mu$
 \end_inset
 
- is approximately 0.2, as shown below.
-\end_layout
+ approximately 0.2, as shown below.
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
 \begin_inset ERT
 status open
 
@@ -6130,21 +6167,26 @@ CoxEL(y=myy,d=myd,Z=myZ,beta=0.5,lam=-15.95,fun=myfun)
 @
 \end_layout
 
-\end_inset
-
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
 Hence the 
-\begin_inset Formula $logLik=-501.0959$
+\begin_inset Formula $logLik_{0}=logLik(\beta=0.5,\mu=0.2)=-501.0959$
 \end_inset
 
 .
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-Recall the process of inverting LRT to get confidence interval for the parameter.
+
+\begin_inset Newline newline
+\end_inset
+
+Recall the process of inverting LRT to get confidence interval for the parameter
+s.
  We reject 
 \begin_inset Formula $H_{00}$
 \end_inset
@@ -6158,7 +6200,7 @@ Recall the process of inverting LRT to get confidence interval for the parameter
 \begin_inset Formula $-2[logLik_{0}-logLik_{A}]<\mbox{some number}.$
 \end_inset
 
- And for 
+ And since 
 \begin_inset Formula $logLik_{A}=logLik(MLE)$
 \end_inset
 
@@ -6166,10 +6208,15 @@ Recall the process of inverting LRT to get confidence interval for the parameter
 \begin_inset Formula $\hat{\beta}_{Cox}$
 \end_inset
 
-, as shown below.
-\end_layout
+ and set 
+\begin_inset Formula $lam=0$
+\end_inset
 
-\begin_layout Standard
+, as shown below.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset ERT
 status open
 
@@ -6190,7 +6237,7 @@ coxph(Surv(myy,myd)~myZ)$coef
 
 \begin_layout Plain Layout
 
-CoxEL(y=myy,d=myd,Z=myZ,beta=0.5337653,lam=-15.95,fun=myfun)
+CoxEL(y=myy,d=myd,Z=myZ,beta=0.5337653,lam=0,fun=myfun)
 \end_layout
 
 \begin_layout Plain Layout
@@ -6198,18 +6245,30 @@ CoxEL(y=myy,d=myd,Z=myZ,beta=0.5337653,lam=-15.95,fun=myfun)
 @
 \end_layout
 
-\end_inset
-
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+Then we have 
+\begin_inset Formula $logLik_{A}=-500.8937$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
 Then, 
 \begin_inset Formula $-2[logLik_{0}-logLik_{A}]=2[logLik_{A}-logLik_{0}]=2[-500.8937+501.0959]=0.4044$
 \end_inset
 
 .
- And we've learned that approximate distribution of 
+ And we've learned the that approximate distribution of 
 \begin_inset Formula $-2[logLik_{0}-logLik_{A}]$
 \end_inset
 
@@ -6217,36 +6276,41 @@ Then,
 \begin_inset Formula $\chi^{2}$
 \end_inset
 
- wich df=2.
+ with 
+\begin_inset Formula $df=2$
+\end_inset
+
+.
  We can calculate the p-value and decide whether to reject based on some
  confidence.
  If reject, we will include this 
-\begin_inset Formula $\beta^{*}$
+\begin_inset Formula $(\beta^{*},\mu^{*})$
 \end_inset
 
- and 
-\begin_inset Formula $\theta$
+ in the confidence set.
+\begin_inset Newline newline
 \end_inset
 
- in the confidence.
-\end_layout
 
-\begin_layout Standard
+\begin_inset Newline newline
+\end_inset
+
 After we have all the possible 
 \begin_inset Formula $\beta^{*}$
 \end_inset
 
  and 
-\begin_inset Formula $\theta$
+\begin_inset Formula $\mu^{*}$
 \end_inset
 
 , we might have a region.
- Then we need to find the range of the values of 
-\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}=\mu$
+ Then we need to find the range of the values that 
+\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}$
 \end_inset
 
-, that will be our confidence for 
-\begin_inset Formula $\mu$
+ can take on that region.
+ And that will be our confidence for 
+\begin_inset Formula $e^{-\varLambda_{0}(300)e^{\beta Z}}$
 \end_inset
 
 .
